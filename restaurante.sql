@@ -17,12 +17,13 @@ CREATE TABLE usuarios (
     id int AUTO_INCREMENT,
     nombre CHARACTER(50),
     apellido CHARACTER(50),
+    rol CHARACTER(50),
     CONSTRAINT pk_usuarios PRIMARY KEY(id)
 );
 
 CREATE TABLE mesas (
     id int AUTO_INCREMENT,
-    tamaño int,
+    tamanio int,
     CONSTRAINT pk_mesas PRIMARY KEY(id)
 );
 
