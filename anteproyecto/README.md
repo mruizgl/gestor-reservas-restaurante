@@ -21,7 +21,7 @@ Este proyecto es una aplicación de gestión de reservas de mesas para un restau
 
 ## Estructura de la Base de Datos
 
-### Modelo `User`
+### Modelo `Usuario`
 - Almacena información de los usuarios del sistema, incluyendo su rol (empleado o administrador).
 
 ### Modelo `Mesa`
