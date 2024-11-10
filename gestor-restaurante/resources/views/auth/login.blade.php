@@ -3,26 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title> Login. </title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
-    <h1>Iniciar Sesión</h1>
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-        <label for="email">Correo Electrónico:</label>
-        <input type="email" id="email" name="email" required>
+    <header class="bg-blue-800 text-white py-4">
+        <h1> Iniciar Sesión. </h1>
+    </header>
 
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
+    <main class="container mx-auto my-10">
+        <form method="POST" action="{{route('login')}}">
+            @csrf
+            <label for="email"> Correo Electrónico: </label>
+            <input type="email" id="email" name="email" required>
+            </br>
+            <label for="password"> Contraseña: </label>
+            <input type="password" id="password" name="password" required>
+            </br>
+            <button type="submit"> Iniciar Sesión. </button>
+            </br>
+            @if ($errors->any())
+                <div>
+                    <strong>Error:</strong> Las credenciales no son válidas.
+                </div>
+            @endif
+        </form>
+    </main>
 
-        <button type="submit">Iniciar Sesión</button>
+    <footer class="bg-blue-800 text-white py-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; {{date('Y')}}. Gestión de Restaurante. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
-
-        @if ($errors->any())
-            <div>
-                <strong>Error:</strong> Las credenciales no son válidas.
-            </div>
-        @endif
-    </form>
 </body>
 </html>
