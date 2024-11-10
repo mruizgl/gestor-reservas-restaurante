@@ -21,3 +21,4 @@ Alumnas que realizan el trabajo: Noelia y Melissa
 ## Índice
 
 1.  [Anteproyecto](./anteproyecto)
+2.  [Proyecto laravel](./gestor-restaurante)
