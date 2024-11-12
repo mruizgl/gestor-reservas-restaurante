@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Reserva extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'mesa_id',
         'user_id',
-        'nombre_cliente',  
-        'telefono_cliente', 
-        'num_personas', 
+        'nombre_cliente',
+        'telefono_cliente',
+        'num_personas',
         'fecha_hora',
     ];
 
