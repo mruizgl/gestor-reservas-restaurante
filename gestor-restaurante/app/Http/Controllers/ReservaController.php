@@ -17,6 +17,10 @@ class ReservaController extends Controller
         return view('reservas.index');
     }
 
+    public function imagen(){
+        return view('reservas.imagen');
+    }
+
     public function store(Request $request) {
         $request->validate([
             'mesa_id' => 'required|exists:mesas,id',
