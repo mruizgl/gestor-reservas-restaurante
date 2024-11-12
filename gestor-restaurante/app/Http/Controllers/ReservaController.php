@@ -10,21 +10,21 @@ use Carbon\Carbon;
  * Controlador de las reservas de la app
  * @author Melissa y Noelia
  */
+
 class ReservaController extends Controller
 {
-    public function index()
-    {
+    public function index() {
         return view('reservas.index');
     }
-    public function store(Request $request)
-    {
+
+    public function store(Request $request) {
         $request->validate([
             'mesa_id' => 'required|exists:mesas,id',
             'user_id' => 'required|exists:users,id',
             'nombre_cliente' => 'required|string',
             'telefono_cliente' => 'required|string',
             'num_personas' => 'required|integer',
-            'fecha_hora' => 'required|date_format:Y-m-d H:i', 
+            'fecha_hora' => 'required|date_format:Y-m-d H:i',
         ]);
 
         $fechaHoraReserva = Carbon::createFromFormat('Y-m-d H:i', $request->fecha_hora);
@@ -50,5 +50,6 @@ class ReservaController extends Controller
         $reserva->save();
 
         return redirect()->route('reservas.index')->with('success', 'Reserva realizada con éxito.');
+
     }
 }
