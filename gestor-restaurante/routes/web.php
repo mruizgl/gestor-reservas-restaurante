@@ -20,3 +20,5 @@ Route::get('/home', [HomeController::class, 'indexHome'])->name('home.index');
 Route::post('/home', [HomeController::class, 'home'])->name('home');
 
 Route::get('/reservas', [ReservaController::class, 'index'])->name('reservas.index');
+
+Route::get('/prueba', [ReservaController::class, 'imagen'])->name('reservas.imagen');
