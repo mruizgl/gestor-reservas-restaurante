@@ -13,7 +13,7 @@
     </header>
 
     <main class="container mx-auto my-10">
-        <form>
+        <form method="POST" action="{{route('home')}}">
             @csrf
             <textarea class="form-control" placeholder="imagenes"></textarea>
             </br>

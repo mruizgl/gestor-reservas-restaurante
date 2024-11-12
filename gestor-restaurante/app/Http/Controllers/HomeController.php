@@ -21,8 +21,7 @@ class HomeController extends Controller {
     }
 
    public function home() {
-        dd('Usuario creado correctamente.');
-        return redirect()->route('home');
+        return view('home.index'); //redirect()->route('home.index');
     }
 
 }

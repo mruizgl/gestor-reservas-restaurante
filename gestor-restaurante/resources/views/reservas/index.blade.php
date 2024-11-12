@@ -13,7 +13,7 @@
     </header>
 
     <main class="container mx-auto my-10">
-        <form>
+        <form method="POST" action="{{route('imagen')}}">
             @csrf
             <label for="fecha"> Fecha reserva: </label>
             <input type="date" id="fecha" name="fecha" required>
