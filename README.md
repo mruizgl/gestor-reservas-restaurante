@@ -4,6 +4,16 @@
     <img src="img/logo.png" style="width: 300px;">
 </div>
 
+## Paleta de colores  
+
+<img src="img/estilos.png">
+
+0D263F  
+2488C1  
+7CABAF  
+CCDBAC  
+F7FAF9  
+
 ### Tarea para AED
 
 Debe mostrarse las mesas y sus posibles ocupantes con CSS e imágenes. Ponemos un margen de dos horas para cada reserva. Esto es, si hay una reserva para las 15:00 no se admite otra reserva para esa mesa hasta las 17:00.
