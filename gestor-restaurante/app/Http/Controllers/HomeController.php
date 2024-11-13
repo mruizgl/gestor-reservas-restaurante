@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Reserva;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -20,8 +21,8 @@ class HomeController extends Controller {
         return view('home.index');
     }
 
-   public function home() {
+   /* public function home() {
         return view('home.index'); //redirect()->route('home.index');
-    }
+    } */
 
 }
