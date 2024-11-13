@@ -4,15 +4,6 @@
     <img src="img/logo.png" style="width: 300px;">
 </div>
 
-## Paleta de colores  
-
-<img src="img/estilos.png">
-
-0D263F  
-2488C1  
-7CABAF  
-CCDBAC  
-F7FAF9  
 
 ### Tarea para AED
 
@@ -27,6 +18,20 @@ Del contacto telefónico que hace la reserva se guarda un nombre y un teléfono 
 Son los usuarios con rol admin los únicos que tienen permiso para registrar nuevos usuarios.  
 
 Alumnas que realizan el trabajo: Noelia y Melissa
+
+## Paleta de colores  
+
+<img src="img/estilos.png">
+
+0D263F  
+2488C1  
+7CABAF  
+CCDBAC  
+
+
+## Modelo E-R  
+<img src="./img/E-R.png">  
+
 
 ## Índice
 
