@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Reservas. </title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <title> Reservas Mesas. </title>
+    <meta name="author" content="Melissa Ruiz González y Noelia Hernández Domínguez">
 </head>
+
 <body>
+
     <header class="bg-blue-800 text-white py-4">
         <h1> Reservas Mesas. </h1>
     </header>
@@ -41,4 +45,5 @@
     </footer>
 
 </body>
+
 </html>

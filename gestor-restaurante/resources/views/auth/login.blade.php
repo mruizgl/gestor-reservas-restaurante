@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Login. </title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <title> Login. </title>
+    <meta name="author" content="Melissa Ruiz González y Noelia Hernández Domínguez">
 </head>
+
 <body>
+
     <header class="bg-blue-800 text-white py-4">
         <h1> Iniciar Sesión. </h1>
     </header>
@@ -37,4 +42,5 @@
     </footer>
 
 </body>
+
 </html>
