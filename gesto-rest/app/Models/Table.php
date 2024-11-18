@@ -9,5 +9,5 @@ class Table extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'capacity', 'image'];
+    protected $fillable = ['ubication', 'capacity'];
 }

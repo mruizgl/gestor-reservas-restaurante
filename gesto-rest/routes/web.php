@@ -15,8 +15,14 @@ use App\Http\Controllers\ReservationController;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome'); // O cualquier vista que quieras mostrar
+})->name('home');
+
 Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+Route::resource('reservations', ReservationController::class);
+
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');

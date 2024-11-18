@@ -5,32 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
     @extends('layouts.app')
 
     @section('content')
         <h1>Reservar Mesa</h1>
+        <br>
         
         <form action="{{ route('reservations.store') }}" method="POST">
             @csrf
     
-            <div class="grid-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
-                @foreach ($tables as $table)
-                    <label>
-                        <input type="radio" name="table_id" value="{{ $table->id }}" required>
-                        <div style="border: 1px solid #ccc; padding: 10px; text-align: center;">
-                            <img src="{{ asset('images/' . $table->capacity . '.png') }}" 
-                                 alt="Mesa de {{ $table->capacity }} personas" 
-                                 style="width: 100px; height: 100px;">
-                            <p>Mesa {{ $table->id }}</p> 
-                            <p>Capacidad: {{ $table->capacity }} personas</p>
-                        </div>
-                    </label>
-                @endforeach
+            <div class="grid-container">
+                @for ($i = 1; $i <= 16; $i++) 
+                    <div class="grid-item">
+                        @php
+                            $table = $tables->firstWhere('id', $i); 
+                        @endphp
+                        
+                        @if ($table) 
+                            <label>
+                                <input type="radio" name="table_id" value="{{ $table->id }}" required>
+                                <div class="table-info">
+                                    <img src="{{ asset('images/' . $table->capacity . '.png') }}" 
+                                         alt="Mesa de {{ $table->capacity }} personas">
+                                    <p>Mesa {{ $table->id }}</p> 
+                                </div>
+                            </label>
+                        @else 
+                            <p>Sin mesa</p>
+                        @endif
+                    </div>
+                @endfor
             </div>
-    
-            <div>
+            <br>
+            
+            <div class="form-container">
                 <label for="customer_name">Nombre del Cliente:</label>
                 <input type="text" name="customer_name" id="customer_name" required>
     
@@ -42,9 +53,10 @@
                 
                 <label for="reservation_time">Fecha y Hora de la Reserva:</label>
                 <input type="datetime-local" name="reservation_time" id="reservation_time" required>
+                <button type="submit" style="margin-top: 20px;">Reservar</button>
+
             </div>
     
-            <button type="submit" style="margin-top: 20px;">Reservar</button>
         </form>
     @endsection
 </body>

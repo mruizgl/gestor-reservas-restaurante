@@ -21,7 +21,6 @@
             <option value="4">4 personas</option>
             <option value="6">6 personas</option>
             <option value="8">8 personas</option>
-            <!-- Puedes agregar más opciones si lo necesitas -->
         </select>
 
         <button type="submit" style="margin-top: 20px;">Agregar Mesa</button>
