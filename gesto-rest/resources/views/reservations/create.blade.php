@@ -15,12 +15,14 @@
         <form action="{{ route('reservations.store') }}" method="POST">
             @csrf
     
-            <div class="grid-container" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
+            <div class="grid-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
                 @foreach ($tables as $table)
                     <label>
                         <input type="radio" name="table_id" value="{{ $table->id }}" required>
                         <div style="border: 1px solid #ccc; padding: 10px; text-align: center;">
-                            <img src="{{ asset($table->image) }}" alt="Mesa de {{ $table->capacity }} personas" style="width: 100px; height: 100px;">
+                            <img src="{{ asset('images/' . $table->capacity . '.png') }}" 
+                                 alt="Mesa de {{ $table->capacity }} personas" 
+                                 style="width: 100px; height: 100px;">
                             <p>Mesa {{ $table->id }}</p> 
                             <p>Capacidad: {{ $table->capacity }} personas</p>
                         </div>
@@ -45,8 +47,5 @@
             <button type="submit" style="margin-top: 20px;">Reservar</button>
         </form>
     @endsection
-
-
-    
 </body>
 </html>
