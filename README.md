@@ -28,6 +28,12 @@ Alumnas que realizan el trabajo: Noelia y Melissa
 7CABAF  
 CCDBAC  
 
+## Mock up
+_login_  
+
+![alt text](img/1.png)  
+_reservas_
+![alt text](img/2.png)
 
 ## Modelo E-R  
 <img src="./img/E-R.png">  
