@@ -32,7 +32,8 @@ CCDBAC
 _login_  
 
 ![alt text](img/1.png)  
-_reservas_
+_reservas_  
+
 ![alt text](img/2.png)
 
 ## Modelo E-R  
