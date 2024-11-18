@@ -21,7 +21,7 @@
                         <input type="radio" name="table_id" value="{{ $table->id }}" required>
                         <div style="border: 1px solid #ccc; padding: 10px; text-align: center;">
                             <img src="{{ asset($table->image) }}" alt="Mesa de {{ $table->capacity }} personas" style="width: 100px; height: 100px;">
-                            <p>Mesa {{ $table->id }}</p> <!-- Si quieres mostrar el ID -->
+                            <p>Mesa {{ $table->id }}</p> 
                             <p>Capacidad: {{ $table->capacity }} personas</p>
                         </div>
                     </label>
