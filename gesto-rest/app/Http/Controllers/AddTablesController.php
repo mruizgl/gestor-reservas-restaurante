@@ -12,18 +12,21 @@ class AddTablesController extends Controller
         return view('addTables.index');
     }
     public function addTables(Request $request) {
+        $zona = $request->zona;
         $dia = $request->dia;
-        $capacity = $request->capacity;
-        return view('addTables.preview')->with('dia', $dia)->with('capacity', $capacity);
+        $capacidad = $request->capacidad;
+        return view('addTables.addTables'
+        )->with('zona', $zona)->with('dia', $dia)->with('capacidad', $capacidad);
     }
 
-    public function preview() {
-      //  $tables = Table::all();
-        return redirect('addTables.preview');//, compact('tables'));
+    public function preview(Request $request) {
+        $dia = $request->dia;
+        $capacidad = $request->capacidad;
+        return view('addTables.preview')->with('dia', $dia)->with('capacidad', $capacidad);
     }
 
-    public function back() {
+/*    public function back() {
         return redirect('addTables.index');
     }
-
+*/
 }
