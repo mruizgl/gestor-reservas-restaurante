@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,6 @@
             align-items: center;
             height: 100vh;
         }
-        
     </style>
 </head>
 
@@ -31,4 +31,5 @@
         <a href="{{ route('login') }}" class="welcome-button">Entrar</a>
     </div>
 </body>
+
 </html>
