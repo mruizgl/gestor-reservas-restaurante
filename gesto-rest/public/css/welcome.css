@@ -1,9 +1,3 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
 .form-container {
     width: 80%; 
     max-width: 800px; 
@@ -144,4 +138,54 @@ input[type="radio"] {
 .table-info img {
     width: 40px; 
     height: 40px; 
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    
+    background-size: cover;
+    color: #282C59;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.welcome-container {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+}
+.welcome-logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+.welcome-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: #B64C78;
+}
+.welcome-text {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+.welcome-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: #282C59;
+    color: #FEFEFD;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.welcome-button:hover {
+    background-color: #B64C78;
 }
