@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Reservar mesa.</title>
+    <title>Añadir mesa del día.</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
     <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png" />
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png"/>
 </head>
 <body>
-    @extends('layouts.app')
+        <div class="form-container">
+            <h1> Añadir mesa del día. </h1>
 
-    @section('content')
-        <h1> Reservar Mesa. </h1>
-        <br>
+             <label for="result">Resultado:</label>
+            <br>
 
-        <form method="POST">
+      <!--  <form action="{{ route('reservations.store') }}" method="POST">
             @csrf
 
             <div class="grid-container">
@@ -40,26 +40,20 @@
                         @endif
                     </div>
                 @endfor
-            </div>
-            <br>
+            </div>-->
+      <!--  @for ($i = 1; $i <= 10; $i++)
 
-            <div class="form-container">
-                <label for="customer_name">Nombre del Cliente:</label>
-                <input type="text" name="customer_name" id="customer_name" required>
+            <div class="table-info">
+                <img src="{{ asset('images/'. $i. '.png') }}" alt="Mesa {{ $i }}">
+                <p>Capacidad: {{ $i }} personas</p>
+                </div>
+        @endfor-->
 
-                <label for="customer_phone">Teléfono del Cliente:</label>
-                <input type="text" name="customer_phone" id="customer_phone" required>
-
-                <label for="num_people">Número de Personas:</label>
-                <input type="number" name="num_people" id="num_people" required min="1">
-
-                <label for="reservation_time">Fecha y Hora de la Reserva:</label>
-                <input type="datetime-local" name="reservation_time" id="reservation_time" required>
-                <button type="submit" style="margin-top: 20px;">Reservar</button>
-
-            </div>
-
-        </form>
-    @endsection
+            </br>
+            <button type="submit" style="margin-top: 20px;"> Guardar. </button>
+            <br><br>
+            <button type="submit" style="margin-top: 20px;"> Atras. </button>
+        </div>
+    </form>
 </body>
 </html>
