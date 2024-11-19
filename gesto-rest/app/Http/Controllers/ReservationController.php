@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Table;
 use App\Models\Reservation;
+use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
+    public function index()
+    {
+       
+        $reservations = Reservation::all(); 
+        
+        return view('reservations.index', compact('reservations'));
+    }
     public function create()
     {
         $tables = Table::all();
@@ -47,6 +55,6 @@ class ReservationController extends Controller
             'reservation_time' => $request->reservation_time,
         ]);
 
-        return redirect()->route('reservations.index')->with('success', 'Reserva realizada con éxito!');
+        return redirect()->route('reservations.create')->with('success', 'Reserva realizada con éxito!');
     }
 }

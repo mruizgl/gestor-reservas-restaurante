@@ -26,7 +26,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
-        dd(session('success'));
+        session()->flash('success', 'Usuario creado con éxito.');
         return redirect()->route('admin.dashboard')->with('success', 'Usuario creado con éxito.');
     }
 }

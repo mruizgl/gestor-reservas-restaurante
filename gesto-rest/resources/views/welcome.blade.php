@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenido - Gestor de Restaurante</title>
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png"/>
     <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
     <style>
         body {

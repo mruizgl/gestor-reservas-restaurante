@@ -37,6 +37,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     
     // Ruta para gestionar reservas
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::resource('reservations', ReservationController::class);
@@ -46,7 +47,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/create-user', [UserController::class, 'store'])->name('admin.storeUser');
 });
 
-
+//--------------------------RESERVATION-----------------------------------------------------------------//
+Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
 Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
 Route::resource('reservations', ReservationController::class);

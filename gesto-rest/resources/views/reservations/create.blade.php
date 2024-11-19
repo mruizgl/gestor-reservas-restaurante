@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
+    <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png" />
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png"/>
 </head>
 <body>
     @extends('layouts.app')

@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mi Aplicación</title>
     
-    <!-- Enlazamos el archivo CSS de la aplicación -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png"/>
 </head>
 <body style="background-color: #CCDBAC; font-family: Arial, sans-serif;">
     <!-- Cabecera -->
