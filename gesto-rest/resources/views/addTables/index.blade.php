@@ -23,8 +23,8 @@
                     <h1> Añadir mesa del día. </h1>
                     <label for="zona"> Zona.
                         <select name="zona" id="zona">
-                            <option> Interior. </option>
-                            <option> Terraza. </option>
+                            <option value="interior"> Interior. </option>
+                            <option value="terraza"> Terraza. </option>
                         </select>
                     </label>
                     </br>

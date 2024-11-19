@@ -21,20 +21,107 @@
 
                 <div class="form-container">
                 <h1> Añadir mesa del día. </h1>
-                </br>
                 <table>
-                    <th>
-                        @for ($i = 1; $i <= 10; $i++)
+                    <tr>
+                        @if ($capacidad == 16)
+                            @for ($i = 1; $i <= $capacidad/2; $i++)
+                            <th>
+                                <label for="table_{{ $i }}"> Mesa {{ $i }}</label>
+                                <select name="capacidadMesa" id="capacidadMesa">
+                                    <option value="2"> 2 </option>
+                                    <option value="4"> 4 </option>
+                                    <option value="6"> 6 </option>
+                                    <option value="8"> 8 </option>
+                                    <option value="10"> 10 </option>
+                                </select>
+                            </th>
+                            @endfor
+                        </tr>
+                        <tr>
+                            @for ($i = ($capacidad/2)+1; $i <= $capacidad; $i++)
+                            <th>
+                                <label for="table_{{ $i }}"> Mesa {{ $i }}</label>
+                                <select name="capacidadMesa" id="capacidadMesa">
+                                    <option value="2"> 2 </option>
+                                    <option value="4"> 4 </option>
+                                    <option value="6"> 6 </option>
+                                    <option value="8"> 8 </option>
+                                    <option value="10"> 10 </option>
+                                </select>
+                            </th>
+                            @endfor
+                        @elseif ($capacidad == 25)
+                        @for ($i = 1; $i < $capacidad/2; $i++)
+                        <th>
                             <label for="table_{{ $i }}"> Mesa {{ $i }}</label>
-                            <select name="capacidad" id="capacidad">
-                                <option value="2">2</option>
-                                <option value="4">4</option>
-                                <option value="6">6</option>
-                                <option value="8">8</option>
-                                <option value="10">10</option>
+                            <select name="capacidadMesa" id="capacidadMesa">
+                                <option value="2"> 2 </option>
+                                <option value="4"> 4 </option>
+                                <option value="6"> 6 </option>
+                                <option value="8"> 8 </option>
+                                <option value="10"> 10 </option>
                             </select>
+                        </th>
                         @endfor
-                    </th>
+                    </tr>
+                    <tr>
+                        @for ($i = ($capacidad/2)+0.5; $i <= $capacidad; $i++)
+                        <th>
+                            <label for="table_{{ $i }}"> Mesa {{ $i }}</label>
+                            <select name="capacidadMesa" id="capacidadMesa">
+                                <option value="2"> 2 </option>
+                                <option value="4"> 4 </option>
+                                <option value="6"> 6 </option>
+                                <option value="8"> 8 </option>
+                                <option value="10"> 10 </option>
+                            </select>
+                        </th>
+                        @endfor
+                        @else
+                        @for ($i = 1; $i < $capacidad/3; $i++)
+                        <th>
+                            <label for="table_{{ $i }}"> Mesa {{ $i }}</label>
+                            <select name="capacidadMesa" id="capacidadMesa">
+                                <option value="2"> 2 </option>
+                                <option value="4"> 4 </option>
+                                <option value="6"> 6 </option>
+                                <option value="8"> 8 </option>
+                                <option value="10"> 10 </option>
+                            </select>
+                        </th>
+                        @endfor
+                    </tr>
+                    <tr>
+                        @for ($i = $capacidad/3; $i < ($capacidad/3)+($capacidad/3); $i++)
+                        <th>
+                            <label for="table_{{ $i }}"> Mesa {{ $i }}</label>
+                            <select name="capacidadMesa" id="capacidadMesa">
+                                <option value="2"> 2 </option>
+                                <option value="4"> 4 </option>
+                                <option value="6"> 6 </option>
+                                <option value="8"> 8 </option>
+                                <option value="10"> 10 </option>
+                            </select>
+                        </th>
+                        @endfor
+                        <tr>
+                            @for ($i = ($capacidad/3)+($capacidad/3); $i <= $capacidad; $i++)
+                            <th>
+                                <label for="table_{{ $i }}"> Mesa {{ $i }}</label>
+                                <select name="capacidadMesa" id="capacidadMesa">
+                                    <option value="2"> 2 </option>
+                                    <option value="4"> 4 </option>
+                                    <option value="6"> 6 </option>
+                                    <option value="8"> 8 </option>
+                                    <option value="10"> 10 </option>
+                                </select>
+                            </th>
+                            @endfor
+                        </tr>
+                        @endif
+
+
+                    </tr>
             </table>
             <button type="submit" style="margin-top: 20px;"> Atras. </button>
             <button type="submit" style="margin-top: 20px;"> Añadir. </button>

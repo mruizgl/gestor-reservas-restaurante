@@ -8,7 +8,7 @@
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png"/>
 </head>
 <body>
-    @extends('layouts.app') 
+    @extends('layouts.app')
 
     @section('content')
         <div class="container">
@@ -21,6 +21,9 @@
             </a>
             <a href="{{ route('admin.createUser') }}" class="list-group-item list-group-item-action">
                 Crear Nuevo Usuario
+            </a>
+            <a href="{{ route('addTables.index')}}" class="list-group-item list-group-item-action">
+                Añadir Mesas
             </a>
         </div>
 
