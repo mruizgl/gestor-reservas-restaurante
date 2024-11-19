@@ -5,7 +5,7 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\pruebaController;
+use App\Http\Controllers\AddTablesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,15 +35,15 @@ Route::get('/dashboard', function () {
 
 //----------------------------AÑADIR MESAS DEL DÍA -------------------------------------//
 
-Route::get('/prueba', [pruebaController::class, 'prueba'])->name('prueba');
-Route::get('/pruebita', [pruebaController::class, 'pruebita'])->name('pruebita');
-Route::get('/pruebaprueba', [pruebaController::class, 'pruebaprueba'])->name('pruebaprueba');
+Route::get('/mesas/create', [AddTablesController::class, 'index'])->name('addTables.index');
+Route::post('/mesas/create', [AddTablesController::class, 'addTables']);
+// Route::get('/mesas/preview', [AddTablesController::class, 'preview'])->name('addTables.preview');
 
 
 
 Route::middleware(['auth', 'admin'])->group(function () {
     // Ruta para el dashboard de admin
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    // Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
     // Ruta para gestionar reservas
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
