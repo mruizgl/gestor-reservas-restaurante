@@ -5,6 +5,7 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\pruebaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use App\Http\Controllers\UserController;
 
 // -----------------------------WELCOME----------------------------------------//
 Route::get('/', function () {
-    return view('welcome'); 
+    return view('welcome');
 })->name('home');
 
 // -----------------------------LOGIN----------------------------------------//
@@ -32,16 +33,24 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+//----------------------------AÑADIR MESAS DEL DÍA -------------------------------------//
+
+Route::get('/prueba', [pruebaController::class, 'prueba'])->name('prueba');
+Route::get('/pruebita', [pruebaController::class, 'pruebita'])->name('pruebita');
+Route::get('/pruebaprueba', [pruebaController::class, 'pruebaprueba'])->name('pruebaprueba');
+
+
+
 Route::middleware(['auth', 'admin'])->group(function () {
     // Ruta para el dashboard de admin
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    
+
     // Ruta para gestionar reservas
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::resource('reservations', ReservationController::class);
-    
+
     // Ruta para crear un nuevo usuario
     Route::get('/admin/create-user', [UserController::class, 'create'])->name('admin.createUser');
     Route::post('/admin/create-user', [UserController::class, 'store'])->name('admin.storeUser');
