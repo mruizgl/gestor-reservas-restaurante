@@ -36,7 +36,7 @@ Route::get('/dashboard', function () {
 //----------------------------AÑADIR MESAS DEL DÍA -------------------------------------//
 
 Route::get('/mesas/create', [AddTablesController::class, 'index'])->name('addTables.index');
-Route::post('/mesas/create', [AddTablesController::class, 'addTables']);
+Route::post('/mesas/create', [AddTablesController::class, 'addTables']);//->name('addTables.addTables');
 // Route::get('/mesas/preview', [AddTablesController::class, 'preview'])->name('addTables.preview');
 
 
