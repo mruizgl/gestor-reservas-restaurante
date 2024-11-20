@@ -18,8 +18,10 @@ class ReservationController extends Controller
     }
     public function create()
     {
-        $tables = Table::all();
-        return view('reservations.create', compact('tables'));
+        $reservations = Reservation::whereDate('reservation_time', now()->toDateString())->get(); 
+        $tables = Table::all(); 
+
+        return view('reservations.create', compact('reservations', 'tables'));
     }
 
     public function store(Request $request)
