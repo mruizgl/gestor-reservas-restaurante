@@ -5,13 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controlador del login de la aplicacion
+ * @author Melissa Ruiz y Noelia
+ */
 class LoginController extends Controller
 {
+    /**
+     * Funcion que devuelve la vista del loin
+     */
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+    /**
+     * Funcion que verifica el login y tu rol
+     */
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -36,6 +46,9 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
+    /**
+     * Funcion que cierra tu sesion y vuelves al inicio
+     */
     public function logout(Request $request)
     {
         Auth::logout();

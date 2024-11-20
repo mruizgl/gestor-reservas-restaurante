@@ -6,12 +6,16 @@ use App\Models\Table;
 use App\Models\Space;
 
 use Illuminate\Http\Request;
-
+/**
+ * Controlador para el añadir mesas
+ * @author Melissa Ruiz y Noelia
+ */
 class AddTablesController extends Controller
 {
-    public function index() {
-        return view('addTables.index');
-    }
+ 
+    /**
+     * Funcion que devuelve la lista y recoge los espacios y el espacio seleccionado 
+     */
     public function create(Request $request)
     {
         $spaces = Space::all();
@@ -26,7 +30,10 @@ class AddTablesController extends Controller
     
         return view('admin.tables.create', compact('spaces', 'selectedSpace'));
     }
-    
+
+    /**
+     * Funcion que agrega las mesas a la tabla
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -58,8 +65,4 @@ class AddTablesController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Mesas añadidas correctamente.');
     }
 
-/*    public function back() {
-        return redirect('addTables.index');
-    }
-*/
 }

@@ -25,16 +25,12 @@ class ReservationController extends Controller
             return redirect()->route('admin.dashboard')->with('error', 'No hay espacios disponibles. Por favor, crea uno primero.');
         }
     
-        // Obtén el nombre del espacio seleccionado o el primero por defecto
         $selectedSpace = $request->get('space', $spaces->first()->name);
     
-        // Busca el objeto del espacio seleccionado
         $selectedSpaceObject = Space::where('name', $selectedSpace)->firstOrFail();
     
-        // Obtén las mesas asociadas al espacio seleccionado
         $tables = Table::where('space_id', $selectedSpaceObject->id)->get();
     
-        // Reservas del día
         $reservations = Reservation::whereDate('reservation_time', now()->toDateString())->get();
     
         return view('admin.reservations.create', compact('spaces', 'tables', 'reservations', 'selectedSpace', 'selectedSpaceObject'));
