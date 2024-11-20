@@ -15,7 +15,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ auth()->user()->role === 'admin' ? route('admin.dashboard') : route('reservations.create') }}">
-                    <img src="{{ asset('images/looblanco2.png') }}" alt="Logo" height="40"> <small> Gesto-Rest</small>
+                    <img src="{{ asset('images/looblanco2.png') }}" alt="Logo" height="40"> <small> Gesto-Rest
+                        
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -43,12 +44,16 @@
 
     <div><h1 class="text-center mb-4">Reservar Mesa</h1></div>
 
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="{{ route('admin.dashboard') }}" >← Volver al Panel de Administración</a>
+    </div>
+
     <main class="container mt-4">
         
 
         <div class="row">
             <div class="col-md-8">
-                <form method="GET" action="{{ route('admin.reservations.create') }}" class="mb-3">
+                <form method="GET" action="{{ route('reservations.create') }}" class="mb-3">
                     <label for="space">Selecciona el Espacio:</label>
                     <select name="space" id="space" onchange="this.form.submit()" class="form-select">
                         @foreach ($spaces as $space)
@@ -111,11 +116,18 @@
                 <div class="reservations-container">
                     <h2>Reservas del Día</h2>
                     @forelse ($reservations as $reservation)
-                        <div class="reservation-item">
-                            <h3>{{ $reservation->customer_name }}</h3>
-                            <p>Teléfono: <span>{{ $reservation->customer_phone }}</span></p>
-                            <p>Hora: {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</p>
-                            <p>Personas: {{ $reservation->num_people }}</p>
+                        <div class="reservation-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h3>{{ $reservation->customer_name }}</h3>
+                                <p>Teléfono: <span>{{ $reservation->customer_phone }}</span></p>
+                                <p>Hora: {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</p>
+                                <p>Personas: {{ $reservation->num_people }}</p>
+                            </div>
+                            <form method="POST" action="{{ route('reservations.destroy', $reservation->id) }}" onsubmit="return confirm('¿Está seguro que desea cancelar esta reserva?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                            </form>
                         </div>
                     @empty
                         <p>No hay reservas para el día de hoy.</p>

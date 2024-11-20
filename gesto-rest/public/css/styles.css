@@ -11,6 +11,13 @@ body {
     color: #282C59;
 }
 
+footer {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    width: 100% !important;
+}
+
 .form-limited {
     max-width: 400px;
     margin: 0 auto;
@@ -26,6 +33,51 @@ header {
     padding: 10px 0;
     text-align: center;
     color: white;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #282C59;
+    background: url('../images/background2.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Asegura que el contenido crezca */
+    width: 100%; /* Garantiza que ocupe todo el ancho */
+}
+
+main {
+    flex: 1; 
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+footer {
+    width: 100%;
+    background-color: #0D263F;
+    color: #F7FAF9;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto; /* Empuja el footer al fondo */
+    position: relative;
 }
 
 main {
@@ -163,7 +215,7 @@ footer {
     margin-top: auto;
 }
 
-/* Responsivo */
+
 @media (max-width: 768px) {
     main {
         flex-direction: column;
@@ -183,12 +235,7 @@ footer {
     }
 }
 
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; 
-    position: relative;
-}
+
 
 
 .btn-back {
@@ -213,24 +260,3 @@ footer {
     background-color: #B64C78;
 }
 
-.time-slots {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.time-slot {
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    color: white;
-}
-
-.time-slot.occupied {
-    background-color: red;
-}
-
-.time-slot.available {
-    background-color: green;
-}

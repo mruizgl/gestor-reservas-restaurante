@@ -1,3 +1,30 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1; 
+}
+
+footer {
+    width: 100%;
+    background-color: #0D263F;
+    color: #F7FAF9;
+    text-align: center;
+    padding: 10px 0;
+    position: relative; 
+    bottom: 0;
+}
+
+
 .container {
     text-align: center;
     background: rgba(255, 255, 255, 0.95);
@@ -114,3 +141,4 @@ header nav a:hover {
         margin: 0 5px;
     }
 }
+
