@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AddTablesController;
 use App\Http\Controllers\SpaceController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // -----------------------------DASHBOARD----------------------------------------//
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [LoginController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
 // -----------------------------MESAS----------------------------------------//
@@ -46,7 +47,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 // -----------------------------RESERVAS----------------------------------//
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');

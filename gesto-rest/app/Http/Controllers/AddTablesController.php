@@ -4,35 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Table;
 use App\Models\Space;
-
 use Illuminate\Http\Request;
+
 /**
- * Controlador para el añadir mesas
- * @author Melissa Ruiz y Noelia
+ * Controlador para gestionar mesas en espacios.
  */
 class AddTablesController extends Controller
 {
- 
     /**
-     * Funcion que devuelve la lista y recoge los espacios y el espacio seleccionado 
+     * Muestra la vista para añadir mesas, cargando espacios y el espacio seleccionado.
      */
     public function create(Request $request)
     {
         $spaces = Space::all();
-    
+
         if ($spaces->isEmpty()) {
             return redirect()->route('admin.dashboard')->with('error', 'No hay espacios disponibles. Por favor, crea uno primero.');
         }
-    
-     
+
         $selectedSpaceId = $request->get('space_id', $spaces->first()->id);
         $selectedSpace = Space::findOrFail($selectedSpaceId);
-    
+
         return view('admin.tables.create', compact('spaces', 'selectedSpace'));
     }
 
     /**
-     * Funcion que agrega las mesas a la tabla
+     * Almacena las mesas en la base de datos o las actualiza si ya existen.
      */
     public function store(Request $request)
     {
@@ -43,12 +40,12 @@ class AddTablesController extends Controller
             'capacity' => 'required|array',
             'capacity.*' => 'integer|min:1',
         ]);
-    
+
         $space = Space::findOrFail($request->space_id);
-    
+
         foreach ($request->tables as $position) {
             [$row, $col] = explode('-', $position);
-    
+
             Table::updateOrCreate(
                 [
                     'space_id' => $space->id,
@@ -61,8 +58,7 @@ class AddTablesController extends Controller
                 ]
             );
         }
-    
+
         return redirect()->route('admin.dashboard')->with('success', 'Mesas añadidas correctamente.');
     }
-
 }

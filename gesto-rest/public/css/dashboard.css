@@ -20,6 +20,7 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    align-items: center;
 }
 
 .list-group a {
@@ -31,6 +32,11 @@ h1 {
     padding: 10px 20px;
     border-radius: 8px;
     transition: all 0.3s ease;
+    max-width: 300px;
+    width: 200px;
+    max-width: 90%; 
+    text-align: center; 
+    
 }
 
 .list-group a:hover {

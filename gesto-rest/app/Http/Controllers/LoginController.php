@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Controlador del login de la aplicacion
+ * Controlador para la gestión del inicio de sesión.
  * @author Melissa Ruiz y Noelia
  */
 class LoginController extends Controller
 {
     /**
-     * Funcion que devuelve la vista del loin
+     * Muestra el formulario de inicio de sesión.
+     *
+     * @return \Illuminate\View\View
      */
     public function showLoginForm()
     {
@@ -20,7 +22,10 @@ class LoginController extends Controller
     }
 
     /**
-     * Funcion que verifica el login y tu rol
+     * Maneja el inicio de sesión y redirige según el rol del usuario.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function login(Request $request)
     {
@@ -28,26 +33,34 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
+    
         if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
-
+    
             $role = Auth::user()->role;
-
+    
             if ($role === 'admin') {
                 return redirect()->route('admin.dashboard');
             }
-
+    
+            // Redirigir a la vista de crear reservas si el rol es de usuario normal
+            if ($role === 'user') {
+                return redirect()->route('reservations.create');
+            }
+    
             return redirect()->route('home');
         }
-
+    
         return back()->withErrors([
             'email' => 'Las credenciales no coinciden con nuestros registros.',
         ])->onlyInput('email');
     }
 
     /**
-     * Funcion que cierra tu sesion y vuelves al inicio
+     * Cierra la sesión del usuario.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function logout(Request $request)
     {
@@ -57,10 +70,5 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
-    }
-
-    public function index()
-    {
-        return view('admin.dashboard');
     }
 }

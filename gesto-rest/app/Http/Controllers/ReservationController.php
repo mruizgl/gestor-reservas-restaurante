@@ -8,35 +8,44 @@ use App\Models\Reservation;
 use Carbon\Carbon;
 use App\Models\Space;
 
+/**
+ * Controlador para la gestión de reservas.
+ */
 class ReservationController extends Controller
 {
+    /**
+     * Muestra todas las reservas.
+     */
     public function index()
     {
-
         $reservations = Reservation::all();
-
         return view('reservations.index', compact('reservations'));
     }
+
+    /**
+     * Muestra la vista de creación de reservas con las mesas disponibles del espacio seleccionado.
+     */
     public function create(Request $request)
     {
         $spaces = Space::all();
-    
+
         if ($spaces->isEmpty()) {
             return redirect()->route('admin.dashboard')->with('error', 'No hay espacios disponibles. Por favor, crea uno primero.');
         }
-    
+
         $selectedSpace = $request->get('space', $spaces->first()->name);
-    
+
         $selectedSpaceObject = Space::where('name', $selectedSpace)->firstOrFail();
-    
         $tables = Table::where('space_id', $selectedSpaceObject->id)->get();
-    
+
         $reservations = Reservation::whereDate('reservation_time', now()->toDateString())->get();
-    
+
         return view('admin.reservations.create', compact('spaces', 'tables', 'reservations', 'selectedSpace', 'selectedSpaceObject'));
     }
-    
 
+    /**
+     * Almacena una nueva reserva en la base de datos.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -50,16 +59,14 @@ class ReservationController extends Controller
         $table = Table::findOrFail($request->table_id);
 
         $conflict = Reservation::where('table_id', $table->id)
-            ->where(function ($query) use ($request) {
-                $query->whereBetween('reservation_time', [
-                    Carbon::parse($request->reservation_time)->subHours(2),
-                    Carbon::parse($request->reservation_time)->addHours(2)
-                ]);
-            })
+            ->whereBetween('reservation_time', [
+                Carbon::parse($request->reservation_time)->subHours(2),
+                Carbon::parse($request->reservation_time)->addHours(2),
+            ])
             ->exists();
 
         if ($conflict) {
-            return back()->withErrors(['error' => 'Ya hay una reserva en ese horario.']);
+            return back()->withErrors(['error' => 'Ya hay una reserva en ese horario.'])->withInput();
         }
 
         Reservation::create([
@@ -70,7 +77,7 @@ class ReservationController extends Controller
             'reservation_time' => $request->reservation_time,
         ]);
 
-
-        return redirect()->route('admin.reservations.create')->with('success', 'Reserva realizada con éxito!');
+        return redirect()->route('admin.reservations.create')
+            ->with('success', 'Reserva realizada con éxito!');
     }
 }

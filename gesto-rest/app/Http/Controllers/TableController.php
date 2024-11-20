@@ -4,20 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Table;
+use App\Models\Space;
 
+/**
+ * Controlador para gestionar las mesas en los espacios.
+ */
 class TableController extends Controller
 {
+    /**
+     * Muestra el formulario para añadir mesas a un espacio.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
-        $tables = Table::all();
-
-        foreach ($tables as $table) {
+        $tables = Table::all()->map(function ($table) {
             $table->image = asset('images/' . $table->capacity . '.png');
-        }
+            return $table;
+        });
 
         return view('reservations.create', compact('tables'));
     }
 
+    /**
+     * Almacena nuevas mesas asociadas a un espacio.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -27,21 +41,24 @@ class TableController extends Controller
             'capacities' => 'required|array',
             'capacities.*' => 'integer|min:1',
         ]);
-    
+
         $space = Space::findOrFail($request->space_id);
-    
-        foreach ($request->tables as $key => $position) {
+
+        foreach ($request->tables as $position) {
             [$row, $col] = explode('-', $position);
-    
-            Table::create([
-                'space_id' => $request->space_id,
-                'row' => $row,
-                'column' => $col,
-                'capacity' => $request->capacities[$position],
-                'ubication' => $space->name,
-            ]);
+
+            Table::updateOrCreate(
+                [
+                    'space_id' => $space->id,
+                    'row' => $row,
+                    'column' => $col,
+                ],
+                [
+                    'capacity' => $request->capacities[$position],
+                ]
+            );
         }
-    
+
         return redirect()->route('admin.dashboard')->with('success', 'Mesas añadidas correctamente.');
     }
 }

@@ -7,22 +7,50 @@
     <title>Reservar Mesa</title>
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
 </head>
+
+
 
 <body>
     <header>
-        <nav>
-            <a href="{{ route('home') }}">Inicio</a>
-            <a href="{{ route('reservations.index') }}">Reservas</a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ route('home') }}">Inicio</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('reservations.index') }}">Reservas</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+            </div>
         </nav>
-    </header>
+    </header>  
 
     <main>
         <div>
             <h1>Reservar Mesa</h1>
 
             <div style="text-align: center; margin-bottom: 20px;">
-                <a href="{{ route('admin.dashboard') }}" class="btn-back">← Volver al Panel de Administración</a>
+                @if(auth()->check() && auth()->user()->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}" class="btn-back">← Volver al Panel de Administración</a>
+                @endif
             </div>
 
             <form method="GET" action="{{ route('reservations.create') }}">
@@ -126,6 +154,9 @@
             background-color: #B64C78;
         }
     </style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </body>
 
 </html>
