@@ -19,28 +19,9 @@ Son los usuarios con rol admin los únicos que tienen permiso para registrar nue
 
 Alumnas que realizan el trabajo: Noelia y Melissa
 
-## Paleta de colores  
-
-<img src="img/estilos.png">
-
-0D263F  
-2488C1  
-7CABAF  
-CCDBAC  
-
-## Mock up
-_login_  
-
-![alt text](img/1.png)  
-_reservas_  
-
-![alt text](img/2.png)
-
-## Modelo E-R  
-<img src="./img/E-R.png">  
 
 
 ## Índice
 
 1.  [Anteproyecto](./anteproyecto)
-2.  [Proyecto laravel](./gestor-restaurante)
+2.  [Proyecto laravel](./gesto-rest)

@@ -59,3 +59,24 @@ Schema::create('reservas', function (Blueprint $table) {
     $table->dateTime('fecha_hora');
     $table->timestamps();
 });
+
+## Paleta de colores  
+
+<img src="img/estilos.png">
+
+0D263F  
+2488C1  
+7CABAF  
+CCDBAC  
+
+## Mock up
+_login_  
+
+![alt text](../img/1.png)  
+_reservas_  
+
+![alt text](../img/2.png)
+
+## Modelo E-R  
+<img src="../img/E-R.png">  
+
