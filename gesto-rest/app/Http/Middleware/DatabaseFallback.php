@@ -18,8 +18,10 @@ class DatabaseFallback
     public function handle($request, Closure $next)
     {
         try {
+            // Verifica la conexión a MySQL
             DB::connection('mysql')->getPdo();
         } catch (\Exception $e) {
+            // Cambia a SQLite si MySQL falla
             Config::set('database.default', 'sqlite');
         }
 

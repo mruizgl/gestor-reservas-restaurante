@@ -12,12 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tables', function (Blueprint $table) {
-            $table->id();
-            $table->string('name'); 
+            $table->id(); 
+            $table->unsignedBigInteger('space_id'); 
+            $table->integer('row'); 
+            $table->integer('column'); 
             $table->integer('capacity'); 
-            $table->unsignedBigInteger('space_id')->after('id'); 
+            $table->timestamps(); 
+
+          
             $table->foreign('space_id')->references('id')->on('spaces')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

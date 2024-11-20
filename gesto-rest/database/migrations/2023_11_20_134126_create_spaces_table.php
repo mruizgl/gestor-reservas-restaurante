@@ -15,12 +15,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('spaces', function (Blueprint $table) {
-            $table->id(); // Clave primaria
-            $table->string('name'); // Nombre del espacio
-            $table->integer('rows'); // Filas
-            $table->integer('columns'); // Columnas
-            $table->text('description')->nullable(); // Descripción opcional
-            $table->timestamps(); // Created_at y updated_at
+            $table->id(); 
+            $table->string('name'); 
+            $table->integer('rows'); 
+            $table->integer('columns'); 
+            $table->text('description')->nullable(); 
+            $table->timestamps(); 
         });
     }
 
