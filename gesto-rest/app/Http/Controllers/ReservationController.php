@@ -21,12 +21,10 @@ class ReservationController extends Controller
         $search = $request->get('search');
     $today = Carbon::today();
 
-    // Reservas del día actual
     $todaysReservations = Reservation::whereDate('reservation_time', $today)
         ->orderBy('reservation_time')
         ->get();
 
-    // Si hay una búsqueda, busca en todas las reservas
     $allReservations = [];
     if ($search) {
         $allReservations = Reservation::where(function ($q) use ($search) {
@@ -46,19 +44,36 @@ class ReservationController extends Controller
     public function create(Request $request)
     {
         $spaces = Space::all();
-
-        if ($spaces->isEmpty()) {
-            return redirect()->route('admin.dashboard')->with('error', 'No hay espacios disponibles. Por favor, crea uno primero.');
-        }
-
         $selectedSpace = $request->get('space', $spaces->first()->name);
+        $selectedTableId = $request->get('table_id');
 
         $selectedSpaceObject = Space::where('name', $selectedSpace)->firstOrFail();
         $tables = Table::where('space_id', $selectedSpaceObject->id)->get();
 
+        $allSlots = collect(range(0, 23))->map(function ($hour) {
+            return Carbon::today()->addHours($hour)->format('H:i');
+        });
+
+        $occupiedSlots = Reservation::where('table_id', $selectedTableId)
+            ->whereDate('reservation_time', now()->toDateString())
+            ->pluck('reservation_time')
+            ->map(function ($time) {
+                return Carbon::parse($time)->format('H:i');
+            });
+
+        // Obtener reservas del día actual
         $reservations = Reservation::whereDate('reservation_time', now()->toDateString())->get();
 
-        return view('admin.reservations.create', compact('spaces', 'tables', 'reservations', 'selectedSpace', 'selectedSpaceObject'));
+        return view('admin.reservations.create', compact(
+            'spaces',
+            'tables',
+            'selectedSpace',
+            'selectedSpaceObject',
+            'selectedTableId',
+            'allSlots',
+            'occupiedSlots',
+            'reservations' // Asegurarse de pasar esta variable
+        ));
     }
 
     /**
@@ -94,6 +109,7 @@ class ReservationController extends Controller
             'num_people' => $request->num_people,
             'reservation_time' => $request->reservation_time,
         ]);
+        
 
         return redirect()->route('admin.reservations.create')
             ->with('success', 'Reserva realizada con éxito!');

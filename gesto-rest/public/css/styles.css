@@ -28,6 +28,11 @@ header {
     color: white;
 }
 
+main {
+    flex: 1; 
+    padding: 20px; 
+}
+
 header nav a {
     color: #F7FAF9;
     text-decoration: none;
@@ -58,13 +63,12 @@ h1 {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 8px; 
     background-color: #F7FAF9;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+    max-width: 500px; 
 }
 
 .grid-item {
@@ -72,32 +76,52 @@ h1 {
     border: 1px solid #2488C1;
     border-radius: 5px;
     text-align: center;
-    padding: 5px;
+    padding: 5px; 
     transition: transform 0.2s, background-color 0.3s;
-    height: 60px;
+    height: 80px; 
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.grid-item img {
+    width: 30px; 
+    height: auto;
+    margin-bottom: 3px;
+}
+
+.grid-item p {
+    margin: 0;
+    font-size: 0.8rem; 
+    color: #282C59;
+}
+
+.grid-item button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.grid-item button img {
+    display: block;
 }
 
 .grid-item:hover {
     background-color: #B64C78;
     color: white;
-    transform: translateY(-5px);
+    transform: translateY(-3px); /* Menor efecto de hover */
 }
 
-.grid-item input[type="radio"] {
-    display: none;
-}
-
-.grid-item label {
-    cursor: pointer;
-}
-
-.grid-item img {
-    width: 30px;
-    height: auto;
-    margin-bottom: 2px;
+.reservations-container {
+    background-color: #F7FAF9;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 250px; /* Menor ancho para reservas */
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .reservations-container {
@@ -159,6 +183,13 @@ footer {
     }
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    position: relative;
+}
+
 
 .btn-back {
     display: block; 
@@ -182,3 +213,24 @@ footer {
     background-color: #B64C78;
 }
 
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.time-slot {
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+}
+
+.time-slot.occupied {
+    background-color: red;
+}
+
+.time-slot.available {
+    background-color: green;
+}

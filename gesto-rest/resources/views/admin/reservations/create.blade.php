@@ -8,16 +8,15 @@
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
 </head>
-
-
 
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ auth()->user()->role === 'admin' ? route('admin.dashboard') : route('reservations.create') }}">Inicio</a>
+                <a class="navbar-brand" href="{{ auth()->user()->role === 'admin' ? route('admin.dashboard') : route('reservations.create') }}">
+                    <img src="{{ asset('images/looblanco2.png') }}" alt="Logo" height="40"> <small> Gesto-Rest</small>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -35,86 +34,94 @@
                             </form>
                         </li>
                     </ul>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
                 </div>
             </div>
         </nav>
-    </header>  
+    </header>
 
     <main>
-        <div>
-            <h1>Reservar Mesa</h1>
+        <div class="container">
+            <h1 class="text-center mb-4">Reservar Mesa</h1>
 
-            <div style="text-align: center; margin-bottom: 20px;">
-                @if(auth()->check() && auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="btn-back">← Volver al Panel de Administración</a>
-                @endif
-            </div>
+            <div class="row">
+                <div class="col-md-7">
+ 
+                    <form method="GET" action="{{ route('admin.reservations.create') }}">
+                        <label for="space">Selecciona el Espacio:</label>
+                        <select name="space" id="space" onchange="this.form.submit()" class="form-select mb-3">
+                            @foreach ($spaces as $space)
+                                <option value="{{ $space->name }}" {{ $selectedSpace == $space->name ? 'selected' : '' }}>
+                                    {{ $space->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
 
-            <form method="GET" action="{{ route('reservations.create') }}">
-                <label for="space">Selecciona el Espacio:</label>
-                <select name="space" id="space" onchange="this.form.submit()">
-                    @foreach ($spaces as $space)
-                        <option value="{{ $space->name }}" {{ $selectedSpace == $space->name ? 'selected' : '' }}>
-                            {{ $space->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </form>
-
-            <form method="POST" action="{{ route('reservations.store') }}">
-                @csrf
-                <div class="grid-container" style="grid-template-columns: repeat({{ $selectedSpaceObject->columns }}, 1fr);">
-                    @for($row = 1; $row <= $selectedSpaceObject->rows; $row++)
-                        @for($col = 1; $col <= $selectedSpaceObject->columns; $col++)
-                            @php
-                                $table = $tables->firstWhere('row', $row)?->firstWhere('column', $col);
-                            @endphp
-                            <div class="grid-item">
-                                @if($table)
-                                    <label>
-                                        <input type="radio" name="table_id" value="{{ $table->id }}" required>
-                                        <img src="{{ asset('images/' . $table->capacity . '.png') }}" alt="Mesa">
-                                        <p>Mesa {{ $table->id }}</p>
-                                    </label>
-                                @else
-                                    <p>Vacío</p>
-                                @endif
-                            </div>
+                    <div class="grid-container" style="grid-template-columns: repeat({{ $selectedSpaceObject->columns }}, 1fr);">
+                        @for($row = 1; $row <= $selectedSpaceObject->rows; $row++)
+                            @for($col = 1; $col <= $selectedSpaceObject->columns; $col++)
+                                @php
+                                    $table = $tables->first(function ($table) use ($row, $col) {
+                                        return $table->row == $row && $table->column == $col;
+                                    });
+                                @endphp
+                                <div class="grid-item">
+                                    @if($table)
+                                        <input type="radio" name="table_id" id="table_{{ $table->id }}" value="{{ $table->id }}" required>
+                                        <label for="table_{{ $table->id }}">
+                                            <img src="{{ asset('images/' . $table->capacity . '.png') }}" alt="Mesa">
+                                            <p>Mesa {{ $table->id }}</p>
+                                        </label>
+                                    @else
+                                        <p>Vacío</p>
+                                    @endif
+                                </div>
+                            @endfor
                         @endfor
-                    @endfor
+                    </div>
+
+                    <form method="POST" action="{{ route('reservations.store') }}" class="mt-4">
+                        @csrf
+                        <div class="form-group mb-3">
+                            <label for="customer_name">Nombre del Cliente:</label>
+                            <input type="text" id="customer_name" name="customer_name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="customer_phone">Teléfono del Cliente:</label>
+                            <input type="text" id="customer_phone" name="customer_phone" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="num_people">Número de Personas:</label>
+                            <input type="number" id="num_people" name="num_people" class="form-control" min="1" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="reservation_time">Fecha y Hora de la Reserva:</label>
+                            <input type="datetime-local" id="reservation_time" name="reservation_time" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Reservar</button>
+                    </form>
                 </div>
-                
 
-                <div class="form-container">
-                    <label for="customer_name">Nombre del Cliente:</label>
-                    <input type="text" id="customer_name" name="customer_name" required>
-
-                    <label for="customer_phone">Teléfono del Cliente:</label>
-                    <input type="text" id="customer_phone" name="customer_phone" required>
-
-                    <label for="num_people">Número de Personas:</label>
-                    <input type="number" id="num_people" name="num_people" required min="1">
-
-                    <label for="reservation_time">Fecha y Hora de la Reserva:</label>
-                    <input type="datetime-local" id="reservation_time" name="reservation_time" required>
-
-                    <button type="submit">Reservar</button>
+                <div class="col-md-5">
+                    <div class="reservations-container">
+                        <h2>Reservas del Día</h2>
+                        @forelse ($reservations as $reservation)
+                            <div class="reservation-item">
+                                <h3>{{ $reservation->customer_name }}</h3>
+                                <p>Teléfono: <span>{{ $reservation->customer_phone }}</span></p>
+                                <p>Hora: {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</p>
+                                <p>Personas: {{ $reservation->num_people }}</p>
+                            </div>
+                        @empty
+                            <p>No hay reservas para el día de hoy.</p>
+                        @endforelse
+                    </div>
                 </div>
-            </form>
-        </div>
-
-        <div class="reservations-container">
-            <h2>Reservas del Día</h2>
-            @foreach ($reservations as $reservation)
-                <div class="reservation-item">
-                    <h3>{{ $reservation->customer_name }}</h3>
-                    <p>Hora: {{ $reservation->reservation_time }}</p>
-                    <p>Personas: {{ $reservation->num_people }}</p>
-                </div>
-            @endforeach
+            </div>
         </div>
     </main>
 
@@ -155,8 +162,7 @@
         }
     </style>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

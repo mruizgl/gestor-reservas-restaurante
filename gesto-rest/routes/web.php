@@ -50,7 +50,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // -----------------------------RESERVAS----------------------------------//
 Route::middleware(['auth'])->group(function () {
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
-    Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
+    Route::get('/reservations/create', [ReservationController::class, 'create'])->name('admin.reservations.create');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('/index/reservations', [ReservationController::class, 'index'])->name('reservations.list');
 });
