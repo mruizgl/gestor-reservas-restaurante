@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Table;
 
 class TableController extends Controller
 {
     public function create()
     {
-        $tables = Table::all(); 
+        $tables = Table::all();
 
         foreach ($tables as $table) {
             $table->image = asset('images/' . $table->capacity . '.png');
@@ -20,12 +21,12 @@ class TableController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'capacity' => 'required|in:2,4,6,8', 
+            'capacity' => 'required|in:2,4,6,8',
         ]);
 
         $table = Table::create([
             'capacity' => $request->capacity,
-            'image' => 'images/tables/' . $request->capacity . '.png', 
+            'image' => 'images/tables/' . $request->capacity . '.png',
         ]);
 
 
