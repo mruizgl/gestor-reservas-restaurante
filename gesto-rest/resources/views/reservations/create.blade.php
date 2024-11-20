@@ -8,7 +8,7 @@
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png" />
     <style>
         body {
-            background: url('{{ asset('images/background3.jpg') }}') no-repeat center center fixed;
+            background: url('{{ asset('images/background2.png') }}') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -172,6 +172,12 @@
     <main>
         <div>
             <h1>Reservar Mesa</h1>
+
+            <!-- Botón de Volver al Panel de Administración -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <a href="{{ route('admin.dashboard') }}" class="btn-back">← Volver al Panel de Administración</a>
+            </div>
+
             <form method="POST" action="{{ route('reservations.store') }}">
                 @csrf
                 <div class="grid-container">
@@ -227,6 +233,24 @@
     <footer>
         <p>&copy; 2024 Gesto-rest. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Estilos para el botón de volver -->
+    <style>
+        .btn-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2488C1;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #B64C78;
+        }
+    </style>
 </body>
 
 </html>
