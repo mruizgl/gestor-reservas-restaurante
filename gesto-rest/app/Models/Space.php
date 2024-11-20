@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Modelo de espacios
+ * @author Melissa Ruiz y Noelia
+ */
 class Space extends Model
 {
     use HasFactory;

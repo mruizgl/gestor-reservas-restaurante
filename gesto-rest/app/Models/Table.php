@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
+/**
+ * Modelo de mesas
+ * @author Melissa Ruiz y Noelia
+ */
 class Table extends Model
 {
     use HasFactory;
@@ -19,20 +24,37 @@ class Table extends Model
 
     protected static function booted()
     {
-        static::created(function ($reservation) {
-            event(new \App\Events\ModelChanged($reservation));
+        // Al crear una mesa, sincronizar con SQLite
+        static::created(function ($table) {
+            try {
+                DB::connection('sqlite')->table($table->getTable())->insert($table->toArray());
+            } catch (\Exception $e) {
+                Log::error('Error syncing Table creation to SQLite: ' . $e->getMessage());
+            }
         });
 
-        static::updated(function ($reservation) {
-            event(new \App\Events\ModelChanged($reservation));
+        // Al actualizar una mesa, sincronizar con SQLite
+        static::updated(function ($table) {
+            try {
+                DB::connection('sqlite')
+                    ->table($table->getTable())
+                    ->where('id', $table->id)
+                    ->update($table->toArray());
+            } catch (\Exception $e) {
+                Log::error('Error syncing Table update to SQLite: ' . $e->getMessage());
+            }
         });
 
-        static::deleted(function ($reservation) {
-            DB::connection('sqlite')
-                ->table($reservation->getTable())
-                ->where('id', $reservation->id)
-                ->delete();
+        // Al eliminar una mesa, sincronizar con SQLite
+        static::deleted(function ($table) {
+            try {
+                DB::connection('sqlite')
+                    ->table($table->getTable())
+                    ->where('id', $table->id)
+                    ->delete();
+            } catch (\Exception $e) {
+                Log::error('Error syncing Table deletion to SQLite: ' . $e->getMessage());
+            }
         });
     }
-
 }

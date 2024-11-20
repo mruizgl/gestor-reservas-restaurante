@@ -135,7 +135,7 @@ class ReservationController extends Controller
         $reservation = Reservation::findOrFail($id);
         $reservation->delete();
 
-        return redirect()->route('admin.reservations.create')->with('success', 'Reserva cancelada con éxito.');
+        return redirect()->route('reservations.create')->with('success', 'Reserva cancelada con éxito.');
     }
 
     /**

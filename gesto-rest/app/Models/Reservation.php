@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
+/**
+ * Modelo de reserva
+ * @author Melissa Ruiz y Noelia
+ */
 class Reservation extends Model
 {
     use HasFactory;
@@ -22,22 +27,40 @@ class Reservation extends Model
     {
         return $this->belongsTo(Table::class);
     }
+
     protected static function booted()
     {
+        // Al crear una reserva, sincronizar con SQLite
         static::created(function ($reservation) {
-            event(new \App\Events\ModelChanged($reservation));
+            try {
+                DB::connection('sqlite')->table($reservation->getTable())->insert($reservation->toArray());
+            } catch (\Exception $e) {
+                Log::error('Error syncing Reservation creation to SQLite: ' . $e->getMessage());
+            }
         });
 
+        // Al actualizar una reserva, sincronizar con SQLite
         static::updated(function ($reservation) {
-            event(new \App\Events\ModelChanged($reservation));
+            try {
+                DB::connection('sqlite')
+                    ->table($reservation->getTable())
+                    ->where('id', $reservation->id)
+                    ->update($reservation->toArray());
+            } catch (\Exception $e) {
+                Log::error('Error syncing Reservation update to SQLite: ' . $e->getMessage());
+            }
         });
 
+        // Al eliminar una reserva, sincronizar con SQLite
         static::deleted(function ($reservation) {
-            DB::connection('sqlite')
-                ->table($reservation->getTable())
-                ->where('id', $reservation->id)
-                ->delete();
+            try {
+                DB::connection('sqlite')
+                    ->table($reservation->getTable())
+                    ->where('id', $reservation->id)
+                    ->delete();
+            } catch (\Exception $e) {
+                Log::error('Error syncing Reservation deletion to SQLite: ' . $e->getMessage());
+            }
         });
     }
-
 }

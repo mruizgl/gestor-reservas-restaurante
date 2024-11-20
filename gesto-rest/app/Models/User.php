@@ -8,7 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
+/**
+ * Modelo de usuarios
+ * @author Melissa Ruiz y Noelia
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
