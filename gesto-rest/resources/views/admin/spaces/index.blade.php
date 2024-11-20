@@ -65,12 +65,6 @@
             <a href="{{ route('spaces.create') }}" class="btn btn-primary">Crear Espacio</a>
         </div>
 
-        
-        @if(session('success'))
-            <div class="alert alert-success text-center">
-                {{ session('success') }}
-            </div>
-        @endif
 
         @if ($spaces->isEmpty())
             <div class="alert alert-info text-center">No hay espacios registrados.</div>
