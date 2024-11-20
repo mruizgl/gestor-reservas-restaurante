@@ -11,9 +11,9 @@ class ReservationController extends Controller
 {
     public function index()
     {
-       
-        $reservations = Reservation::all(); 
-        
+
+        $reservations = Reservation::all();
+
         return view('reservations.index', compact('reservations'));
     }
     public function create()
@@ -54,7 +54,7 @@ class ReservationController extends Controller
             'num_people' => $request->num_people,
             'reservation_time' => $request->reservation_time,
         ]);
-        
+
 
         return redirect()->route('reservations.create')->with('success', 'Reserva realizada con éxito!');
     }

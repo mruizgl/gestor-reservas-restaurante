@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login'); 
+        return view('auth.login');
     }
 
     public function login(Request $request)
@@ -48,6 +48,6 @@ class LoginController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard'); 
+        return view('admin.dashboard');
     }
 }
