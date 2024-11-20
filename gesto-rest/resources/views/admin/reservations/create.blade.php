@@ -123,11 +123,18 @@
                                 <p>Hora: {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</p>
                                 <p>Personas: {{ $reservation->num_people }}</p>
                             </div>
-                            <form method="POST" action="{{ route('reservations.destroy', $reservation->id) }}" onsubmit="return confirm('¿Está seguro que desea cancelar esta reserva?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
-                            </form>
+                            <div>
+
+                                <a href="{{ route('reservations.edit', $reservation->id) }}" class="btn btn-warning btn-sm mb-2">
+                                    Editar
+                                </a>
+                                
+                                <form method="POST" action="{{ route('reservations.destroy', $reservation->id) }}" onsubmit="return confirm('¿Está seguro que desea cancelar esta reserva?');" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                                </form>
+                            </div>
                         </div>
                     @empty
                         <p>No hay reservas para el día de hoy.</p>

@@ -52,48 +52,74 @@
         </div>
 
         <h3 class="mb-3">Reservas de Hoy</h3>
-        @if ($todaysReservations->isNotEmpty())
-            <ul class="list-group mb-4">
-                @foreach ($todaysReservations as $reservation)
+    @if ($todaysReservations->isNotEmpty())
+        <ul class="list-group mb-4">
+            @foreach ($todaysReservations as $reservation)
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ $reservation->customer_name }}</strong>
+                        <span class="text-muted" style="font-size: 0.9rem;">({{ $reservation->customer_phone }})</span>
+                        <br>
+                        Hora: {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}
+                        <br>
+                        Mesa: {{ $reservation->table->id ?? 'N/A' }}
+                        <br>
+                        <span class="badge bg-secondary">{{ $reservation->num_people }} personas</span>
+                    </div>
+                    <div class="d-flex flex-column">
+     
+                        <a href="{{ route('reservations.edit', $reservation->id) }}" class="btn btn-warning btn-sm mb-2">
+                            Editar
+                        </a>
+   
+                        <form method="POST" action="{{ route('reservations.destroy', $reservation->id) }}" onsubmit="return confirm('¿Está seguro que desea cancelar esta reserva?');" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                        </form>
+                        
+                        
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <div class="alert alert-info text-center">No hay reservas para hoy.</div>
+    @endif
+
+    @if($search)
+        <h3 class="mt-4">Resultados de Búsqueda</h3>
+        @if ($allReservations->isNotEmpty())
+            <ul class="list-group">
+                @foreach ($allReservations as $reservation)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
                             <strong>{{ $reservation->customer_name }}</strong>
                             <span class="text-muted" style="font-size: 0.9rem;">({{ $reservation->customer_phone }})</span>
                             <br>
-                            Hora: {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}
+                            Hora: {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('d/m/Y H:i') }}
                             <br>
                             Mesa: {{ $reservation->table->id ?? 'N/A' }}
                         </div>
-                        <span class="badge bg-secondary">{{ $reservation->num_people }} personas</span>
+                        <div class="d-flex flex-column">
+                            <!-- Botón de Editar -->
+                            <a href="{{ route('reservations.edit', $reservation->id) }}" class="btn btn-warning btn-sm mb-2">
+                                Editar
+                            </a>
+                            <!-- Botón de Eliminar -->
+                            <form method="POST" action="{{ route('reservations.destroy', $reservation->id) }}" onsubmit="return confirm('¿Está seguro que desea cancelar esta reserva?');" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                            </form>
+                        </div>
                     </li>
                 @endforeach
             </ul>
         @else
-            <div class="alert alert-info text-center">No hay reservas para hoy.</div>
+            <div class="alert alert-info text-center">No se encontraron resultados para "{{ $search }}".</div>
         @endif
-
-        @if($search)
-            <h3 class="mt-4">Resultados de Búsqueda</h3>
-            @if ($allReservations->isNotEmpty())
-                <ul class="list-group">
-                    @foreach ($allReservations as $reservation)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div>
-                                <strong>{{ $reservation->customer_name }}</strong>
-                                <span class="text-muted" style="font-size: 0.9rem;">({{ $reservation->customer_phone }})</span>
-                                <br>
-                                Hora: {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('d/m/Y H:i') }}
-                                <br>
-                                Mesa: {{ $reservation->table->id ?? 'N/A' }}
-                            </div>
-                            <span class="badge bg-secondary">{{ $reservation->num_people }} personas</span>
-                        </li>
-                    @endforeach
-                </ul>
-            @else
-                <div class="alert alert-info text-center">No se encontraron resultados para "{{ $search }}".</div>
-            @endif
-        @endif
+    @endif
     </main>
 
     <footer class="mt-auto">

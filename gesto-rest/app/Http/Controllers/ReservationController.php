@@ -128,4 +128,32 @@ class ReservationController extends Controller
         return redirect()->route('admin.reservations.create')->with('success', 'Reserva cancelada con éxito.');
     }
 
+    /**
+     * Update del crud de reservas
+     */
+    public function edit($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $tables = Table::all(); 
+
+        return view('admin.reservations.edit', compact('reservation', 'tables'));
+    }
+
+    public function update(Request $request, $id)
+{
+    $reservation = Reservation::findOrFail($id);
+    
+    $request->validate([
+        'customer_name' => 'required|string|max:255',
+        'customer_phone' => 'required|string|max:20',
+        'num_people' => 'required|integer|min:1',
+        'reservation_time' => 'required|date',
+        'table_id' => 'required|exists:tables,id',
+    ]);
+
+    $reservation->update($request->all());
+
+    return redirect()->route('reservations.index')->with('success', 'Reserva actualizada correctamente');
+}
+
 }

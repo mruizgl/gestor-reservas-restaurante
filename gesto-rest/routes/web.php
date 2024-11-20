@@ -54,7 +54,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('/index/reservations', [ReservationController::class, 'index'])->name('reservations.list');
     Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
-
+    Route::get('reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
+    Route::put('reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
 });
 
 // -----------------------------USUARIOS----------------------------------------//
