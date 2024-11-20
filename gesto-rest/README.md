@@ -15,4 +15,7 @@ php artisan db:seed --class=UsersTableSeeder
 Y ya podemos utilizar nuestra app lanzando
 ```
 php artisan serve
-```
+```  
+Creedenciales para probar aplicacion:  
+__user admin:__ melissa@restaurante.com   
+__password:__ admin
