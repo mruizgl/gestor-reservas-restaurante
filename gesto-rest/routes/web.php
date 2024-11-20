@@ -6,6 +6,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AddTablesController;
+use App\Http\Controllers\SpaceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,10 +36,14 @@ Route::get('/dashboard', function () {
 
 //----------------------------AÑADIR MESAS DEL DÍA -------------------------------------//
 
-Route::get('/mesas/create', [AddTablesController::class, 'index'])->name('addTables.index');
-Route::post('/mesas/create', [AddTablesController::class, 'addTables']);//->name('addTables.addTables');
+Route::get('/admin/tables/create', [AddTablesController::class, 'create'])->name('tables.create');
+Route::post('/admin/tables/store', [AddTablesController::class, 'store'])->name('tables.store');
 // Route::get('/mesas/preview', [AddTablesController::class, 'preview'])->name('addTables.preview');
 
+
+//----------------------------ESPACIOS--------------------------------------------------------//
+Route::get('/admin/spaces/create', [SpaceController::class, 'create'])->name('spaces.create');
+Route::post('/admin/spaces/store', [SpaceController::class, 'store'])->name('spaces.store');
 
 
 Route::middleware(['auth', 'admin'])->group(function () {

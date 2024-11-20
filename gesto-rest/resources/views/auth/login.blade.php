@@ -23,10 +23,10 @@
 
         .login-container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+            background: rgba(255, 255, 255, 0.8); 
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra más ligera */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
             max-width: 400px;
             width: 90%;
         }
@@ -40,7 +40,7 @@
             font-size: 2rem;
             margin-bottom: 1rem;
             font-weight: bold;
-            color: #B64C78; /* Consistente con la página de bienvenida */
+            color: #B64C78; 
         }
 
         .login-form {
@@ -50,7 +50,7 @@
         .login-form label {
             display: block;
             font-size: 14px;
-            color: #0D263F; /* Consistente con los labels de la bienvenida */
+            color: #0D263F; 
             margin-bottom: 5px;
             font-weight: bold;
         }
@@ -67,7 +67,7 @@
         .login-button {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #282C59; /* Color consistente con la bienvenida */
+            background-color: #282C59; 
             color: #FEFEFD;
             text-decoration: none;
             border-radius: 5px;
@@ -78,7 +78,7 @@
         }
 
         .login-button:hover {
-            background-color: #B64C78; /* Color del hover de bienvenida */
+            background-color: #B64C78; 
         }
     </style>
 </head>

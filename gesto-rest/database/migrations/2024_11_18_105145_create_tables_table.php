@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name'); 
             $table->integer('capacity'); 
+            $table->unsignedBigInteger('space_id')->after('id'); 
+            $table->foreign('space_id')->references('id')->on('spaces')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Table;
 use App\Models\Reservation;
 use Carbon\Carbon;
+use App\Models\Space;
 
 class ReservationController extends Controller
 {
@@ -16,13 +17,29 @@ class ReservationController extends Controller
 
         return view('reservations.index', compact('reservations'));
     }
-    public function create()
+    public function create(Request $request)
     {
-        $reservations = Reservation::whereDate('reservation_time', now()->toDateString())->get(); 
-        $tables = Table::all(); 
-
-        return view('reservations.create', compact('reservations', 'tables'));
+        $spaces = Space::all();
+    
+        if ($spaces->isEmpty()) {
+            return redirect()->route('admin.dashboard')->with('error', 'No hay espacios disponibles. Por favor, crea uno primero.');
+        }
+    
+        // Obtén el nombre del espacio seleccionado o el primero por defecto
+        $selectedSpace = $request->get('space', $spaces->first()->name);
+    
+        // Busca el objeto del espacio seleccionado
+        $selectedSpaceObject = Space::where('name', $selectedSpace)->firstOrFail();
+    
+        // Obtén las mesas asociadas al espacio seleccionado
+        $tables = Table::where('space_id', $selectedSpaceObject->id)->get();
+    
+        // Reservas del día
+        $reservations = Reservation::whereDate('reservation_time', now()->toDateString())->get();
+    
+        return view('admin.reservations.create', compact('spaces', 'tables', 'reservations', 'selectedSpace', 'selectedSpaceObject'));
     }
+    
 
     public function store(Request $request)
     {
@@ -58,6 +75,6 @@ class ReservationController extends Controller
         ]);
 
 
-        return redirect()->route('reservations.create')->with('success', 'Reserva realizada con éxito!');
+        return redirect()->route('admin.reservations.create')->with('success', 'Reserva realizada con éxito!');
     }
 }

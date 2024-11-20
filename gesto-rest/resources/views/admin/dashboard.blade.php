@@ -161,9 +161,12 @@
             <p>Seleccione una opción para gestionar las reservas o crear nuevos usuarios.</p>
 
             <div class="list-group">
-                <a href="{{ route('reservations.create') }}">Gestionar Reservas</a>
-                <a href="{{ route('admin.createUser') }}">Crear Nuevo Usuario</a>
-                <a href="{{ route('addTables.index') }}">Añadir Mesas</a>
+                <div class="list-group">
+                    <a href="{{ route('reservations.create') }}" class="list-group-item">Gestionar Reservas</a>
+                    <a href="{{ route('admin.createUser') }}" class="list-group-item">Crear Nuevo Usuario</a>
+                    <a href="{{ route('tables.create') }}" class="list-group-item">Añadir Mesas</a>
+                    <a href="{{ route('spaces.create') }}" class="list-group-item">Crear Espacio</a> 
+                </div>
             </div>
         </div>
     </main>

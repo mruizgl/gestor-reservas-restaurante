@@ -21,15 +21,27 @@ class TableController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'capacity' => 'required|in:2,4,6,8',
+            'space_id' => 'required|exists:spaces,id',
+            'tables' => 'required|array',
+            'tables.*' => 'string',
+            'capacities' => 'required|array',
+            'capacities.*' => 'integer|min:1',
         ]);
-
-        $table = Table::create([
-            'capacity' => $request->capacity,
-            'image' => 'images/tables/' . $request->capacity . '.png',
-        ]);
-
-
-        return redirect()->route('tables.index')->with('success', 'Mesa agregada exitosamente!');
+    
+        $space = Space::findOrFail($request->space_id);
+    
+        foreach ($request->tables as $key => $position) {
+            [$row, $col] = explode('-', $position);
+    
+            Table::create([
+                'space_id' => $request->space_id,
+                'row' => $row,
+                'column' => $col,
+                'capacity' => $request->capacities[$position],
+                'ubication' => $space->name,
+            ]);
+        }
+    
+        return redirect()->route('admin.dashboard')->with('success', 'Mesas añadidas correctamente.');
     }
 }
