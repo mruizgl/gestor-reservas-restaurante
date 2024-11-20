@@ -19,3 +19,7 @@ php artisan serve
 Creedenciales para probar aplicacion:  
 __user admin:__ melissa@restaurante.com   
 __password:__ admin
+
+## Importante
+Lo primero es crear un espacio de trabajo, por ejemplo "Interior" donde eliges las filas y columnas del grid que simula un mapa.  
+Después añades las mesas según la distribución de tu restaurante y después ya puedes realizar reservas sin problema.
