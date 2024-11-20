@@ -1,73 +1,128 @@
-
 <?php
 
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User; // Modelo relacionado
+use App\Models\User;
 
+/**
+ * Testing del CRUD de Usuarios
+ * @author Melissa Ruiz y Noelia
+ */
 class UserCrudTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * Test creación de un nuevo registro en User.
+     * Test de crear usuario
      */
-    public function test_create_user()
+    public function test_it_can_create_a_user()
     {
-        $response = $this->post('/users', [
-            'field1' => 'value1', // Sustituir por los campos reales
-            'field2' => 'value2',
-        ]);
+        // Crear un usuario administrador autenticado
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin);
 
-        $response->assertStatus(201);
+        // Datos del nuevo usuario
+        $data = [
+            'name' => 'Nuevo Usuario',
+            'email' => 'nuevo.usuario@example.com',
+            'password' => 'Password123',
+            'password_confirmation' => 'Password123',
+        ];
+
+        // Realizar el POST para crear un usuario
+        $response = $this->post(route('admin.storeUser'), $data);
+
+        // Verificar redirección y mensaje de éxito
+        $response->assertRedirect(route('admin.dashboard'));
+        $response->assertSessionHas('success', 'Usuario creado con éxito.');
+
+        // Confirmar que el usuario fue creado en la base de datos
         $this->assertDatabaseHas('users', [
-            'field1' => 'value1',
+            'name' => 'Nuevo Usuario',
+            'email' => 'nuevo.usuario@example.com',
         ]);
     }
 
     /**
-     * Test lectura de un registro de User.
+     * Test de leer usuario
      */
-    public function test_read_user()
+    public function test_it_can_read_users()
     {
-        $model = User::factory()->create();
+        // Crear un usuario administrador autenticado
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin);
 
-        $response = $this->get('/users/' . $model->id);
+        // Crear usuarios
+        $users = User::factory(3)->create();
+
+        // Obtener la lista de usuarios
+        $response = $this->get(route('admin.users.index'));
+
+        // Verificar estado y contenido
         $response->assertStatus(200);
-        $response->assertJson($model->toArray());
+        foreach ($users as $user) {
+            $response->assertSee($user->name);
+            $response->assertSee($user->email);
+        }
     }
 
     /**
-     * Test actualización de un registro de User.
+     * Test de actualizar usuario
      */
-    public function test_update_user()
+    public function test_it_can_update_a_user()
     {
-        $model = User::factory()->create();
+        // Crear un usuario administrador autenticado
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin);
 
-        $response = $this->put('/users/' . $model->id, [
-            'field1' => 'updated_value',
-        ]);
+        // Crear un usuario a actualizar
+        $user = User::factory()->create();
 
-        $response->assertStatus(200);
+        // Nuevos datos del usuario
+        $updatedData = [
+            'name' => 'Usuario Actualizado',
+            'email' => 'actualizado@example.com',
+            'role' => 'user',
+        ];
+
+        // Realizar el PUT para actualizar el usuario
+        $response = $this->put(route('admin.users.update', $user->id), $updatedData);
+
+        // Verificar redirección y mensaje de éxito
+        $response->assertRedirect(route('admin.users.index'));
+        $response->assertSessionHas('success', 'Empleado actualizado correctamente.');
+
+        // Confirmar que los datos fueron actualizados en la base de datos
         $this->assertDatabaseHas('users', [
-            'id' => $model->id,
-            'field1' => 'updated_value',
+            'id' => $user->id,
+            'name' => 'Usuario Actualizado',
+            'email' => 'actualizado@example.com',
+            'role' => 'user',
         ]);
     }
 
     /**
-     * Test eliminación de un registro de User.
+     * Test de eliminar usuarios
      */
-    public function test_delete_user()
+    public function test_it_can_delete_a_user()
     {
-        $model = User::factory()->create();
+        // Crear un usuario administrador autenticado
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin);
 
-        $response = $this->delete('/users/' . $model->id);
-        $response->assertStatus(200);
-        $this->assertDatabaseMissing('users', [
-            'id' => $model->id,
-        ]);
+        // Crear un usuario a eliminar
+        $user = User::factory()->create();
+
+        // Realizar el DELETE para eliminar el usuario
+        $response = $this->delete(route('admin.users.destroy', $user->id));
+
+        // Verificar redirección y mensaje de éxito
+        $response->assertRedirect(route('admin.users.index'));
+        $response->assertSessionHas('success', 'Empleado eliminado correctamente.');
+
+        // Confirmar que el usuario fue eliminado de la base de datos
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Table;
+use App\Models\Space;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Table>
@@ -15,9 +16,11 @@ class TableFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word, // Nombre aleatorio
-            'capacity' => $this->faker->numberBetween(2, 6), // Capacidad entre 2 y 6
-            'image' => $this->faker->imageUrl(100, 100), // URL de una imagen aleatoria
+            'space_id' => Space::factory(), 
+            'row' => $this->faker->numberBetween(1, 5),
+            'column' => $this->faker->numberBetween(1, 5),
+            'capacity' => $this->faker->numberBetween(2, 10),
+            'ubicacion' => $this->faker->word(),
         ];
     }
 }

@@ -1,73 +1,85 @@
-
 <?php
 
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Space; // Modelo relacionado
+use App\Models\Space;
+use App\Models\User;
 
+/**
+ * Testing del crud de espacios
+ */
 class SpaceCrudTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * Test creación de un nuevo registro en Space.
+     * Seteamos y simulamos ser admin para poder realizar el crud ya que solo lo puede hacer el admin
      */
-    public function test_create_space()
+    protected function setUp(): void
     {
-        $response = $this->post('/spaces', [
-            'field1' => 'value1', // Sustituir por los campos reales
-            'field2' => 'value2',
-        ]);
+        parent::setUp();
 
-        $response->assertStatus(201);
-        $this->assertDatabaseHas('spaces', [
-            'field1' => 'value1',
-        ]);
+       
+        $this->actingAs(User::factory()->create(['role' => 'admin']));
     }
 
-    /**
-     * Test lectura de un registro de Space.
-     */
-    public function test_read_space()
+    public function test_it_can_create_a_space()
     {
-        $model = Space::factory()->create();
+        $data = [
+            'name' => 'Espacio de Prueba',
+            'rows' => 5,
+            'columns' => 5,
+            'description' => 'Descripción del espacio de prueba.',
+        ];
 
-        $response = $this->get('/spaces/' . $model->id);
-        $response->assertStatus(200);
-        $response->assertJson($model->toArray());
+        $response = $this->post(route('spaces.store'), $data);
+
+        $response->assertRedirect(route('spaces.index'));
+        $response->assertSessionHas('success', 'Espacio creado correctamente.');
+
+        $this->assertDatabaseHas('spaces', $data);
     }
 
-    /**
-     * Test actualización de un registro de Space.
-     */
-    public function test_update_space()
+    public function test_it_can_read_spaces()
     {
-        $model = Space::factory()->create();
+        $space = Space::factory()->create();
 
-        $response = $this->put('/spaces/' . $model->id, [
-            'field1' => 'updated_value',
-        ]);
+        $response = $this->get(route('spaces.index'));
 
         $response->assertStatus(200);
-        $this->assertDatabaseHas('spaces', [
-            'id' => $model->id,
-            'field1' => 'updated_value',
-        ]);
+        $response->assertSee($space->name);
     }
 
-    /**
-     * Test eliminación de un registro de Space.
-     */
-    public function test_delete_space()
+    public function test_it_can_update_a_space()
     {
-        $model = Space::factory()->create();
+        $space = Space::factory()->create();
 
-        $response = $this->delete('/spaces/' . $model->id);
-        $response->assertStatus(200);
-        $this->assertDatabaseMissing('spaces', [
-            'id' => $model->id,
-        ]);
+        $updatedData = [
+            'name' => 'Espacio Actualizado',
+            'rows' => 6,
+            'columns' => 6,
+            'description' => 'Descripción actualizada.',
+        ];
+
+        $response = $this->put(route('spaces.update', $space->id), $updatedData);
+
+        $response->assertRedirect(route('spaces.index'));
+        $response->assertSessionHas('success', 'Espacio actualizado correctamente.');
+
+        $this->assertDatabaseHas('spaces', $updatedData);
+    }
+
+    public function test_it_can_delete_a_space()
+    {
+        $space = Space::factory()->create();
+
+        $response = $this->delete(route('spaces.destroy', $space->id));
+
+        $response->assertRedirect(route('spaces.index'));
+        $response->assertSessionHas('success', 'Espacio eliminado correctamente.');
+
+        $this->assertDatabaseMissing('spaces', ['id' => $space->id]);
     }
 }
