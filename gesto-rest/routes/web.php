@@ -53,6 +53,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reservations/create', [ReservationController::class, 'create'])->name('admin.reservations.create');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('/index/reservations', [ReservationController::class, 'index'])->name('reservations.list');
+    Route::get('/admin/reservations/tramos', [ReservationController::class, 'showTimeSlots'])->name('admin.reservations.tramos');
+
+
 });
 
 // -----------------------------USUARIOS----------------------------------------//

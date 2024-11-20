@@ -114,4 +114,30 @@ class ReservationController extends Controller
         return redirect()->route('admin.reservations.create')
             ->with('success', 'Reserva realizada con éxito!');
     }
+
+    public function showTimeSlots(Request $request)
+    {
+        $request->validate([
+            'table_id' => 'required|exists:tables,id',
+        ]);
+    
+        $selectedTableId = $request->table_id;
+    
+        // Obtener las horas ocupadas redondeadas a la hora más cercana
+        $occupiedSlots = Reservation::where('table_id', $selectedTableId)
+            ->whereDate('reservation_time', now()->toDateString())
+            ->get()
+            ->pluck('reservation_time')
+            ->map(function ($time) {
+                return \Carbon\Carbon::parse($time)->format('H:00'); // Redondea hacia abajo
+            });
+    
+        // Crear tramos horarios de 00:00 a 23:00
+        $allSlots = collect();
+        for ($hour = 0; $hour < 24; $hour++) {
+            $allSlots->push(\Carbon\Carbon::today()->addHours($hour)->format('H:00'));
+        }
+    
+        return view('admin.reservations.create', compact('allSlots', 'occupiedSlots', 'selectedTableId'));
+    }
 }
