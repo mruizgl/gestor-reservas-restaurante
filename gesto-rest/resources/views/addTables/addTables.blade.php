@@ -9,19 +9,6 @@
         <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
         <link rel="icon" href="{{asset('images/logo.png')}}" type="image/png" />
         <link rel="icon" href="{{asset('images/favicon.png')}}" type="image/png"/>
-        <style>
-            body {
-                font-family: 'Arial', sans-serif;
-                margin: 0;
-                padding: 0;
-                background: url('{{ asset('images/background2.png') }}') no-repeat center center fixed;
-                background-size: cover;
-                color: #282C59;
-                display:grid;
-                align-items: center;
-                justify-content: center;
-            }
-        </style>
     </head>
 
     <body>

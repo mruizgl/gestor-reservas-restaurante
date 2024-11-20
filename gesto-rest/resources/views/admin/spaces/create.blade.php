@@ -17,11 +17,16 @@
         </nav>
     </header>
 
+    <br>
+    <br>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="{{ route('admin.dashboard') }}" class="btn-back">← Volver al Panel de Administración</a>
+    </div>
+
     <main>
         <div class="container">
             <h1>Crear Espacio</h1>
 
-            <!-- Mensajes de validación -->
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>

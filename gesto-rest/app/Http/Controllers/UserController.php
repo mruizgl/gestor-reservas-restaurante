@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function create()
     {
-        return view('admin.createUser');
+        return view('admin.users.createUser');
     }
 
     public function store(Request $request)
