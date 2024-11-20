@@ -49,4 +49,47 @@ class UserController extends Controller
 
         return redirect()->route('admin.dashboard')->with('success', 'Usuario creado con éxito.');
     }
+    public function index()
+    {
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
+    }
+
+    
+
+ 
+
+    public function edit($id)
+    {
+        $employee = User::findOrFail($id);
+        return view('admin.users.edit', compact('employee'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $employee = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $employee->id,
+            'role' => 'required|string',
+        ]);
+
+        $employee->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => $request->password ? bcrypt($request->password) : $employee->password,
+        ]);
+
+        return redirect()->route('admin.users.index')->with('success', 'Empleado actualizado correctamente.');
+    }
+
+    public function destroy($id)
+    {
+        $employee = User::findOrFail($id);
+        $employee->delete();
+
+        return redirect()->route('admin.users.index')->with('success', 'Empleado eliminado correctamente.');
+    }
 }
