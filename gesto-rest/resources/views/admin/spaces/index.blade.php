@@ -39,6 +39,19 @@
     </header>
 
     <h1 class="text-center">Gestión de Espacios</h1>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @elseif (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div style="text-align: center; margin-bottom: 20px;">
         <a href="{{ route('admin.dashboard') }}" >← Volver al Panel de Administración</a>

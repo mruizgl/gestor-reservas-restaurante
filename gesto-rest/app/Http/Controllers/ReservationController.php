@@ -65,7 +65,9 @@ class ReservationController extends Controller
             });
 
         // Obtener reservas del día actual
-        $reservations = Reservation::whereDate('reservation_time', now()->toDateString())->get();
+        $reservations = Reservation::whereDate('reservation_time', now()->toDateString())
+        ->with('table') 
+        ->get();
 
         return view('admin.reservations.create', compact(
             'spaces',
@@ -91,31 +93,36 @@ class ReservationController extends Controller
             'num_people' => 'required|integer|min:1',
             'reservation_time' => 'required|date|after:now',
         ]);
-
+    
         $table = Table::findOrFail($request->table_id);
-
+    
+        $reservationTime = Carbon::parse($request->reservation_time);
+    
+        // Verificar conflictos con otras reservas dentro de las dos horas anteriores y posteriores
         $conflict = Reservation::where('table_id', $table->id)
-            ->whereBetween('reservation_time', [
-                Carbon::parse($request->reservation_time)->subHours(2),
-                Carbon::parse($request->reservation_time)->addHours(2),
-            ])
+            ->where(function ($query) use ($reservationTime) {
+                $query->whereBetween('reservation_time', [
+                    $reservationTime->copy()->subHours(2), // 2 horas antes
+                    $reservationTime->copy()->addHours(2), // 2 horas después
+                ]);
+            })
             ->exists();
-
+    
         if ($conflict) {
-            return back()->withErrors(['error' => 'Ya hay una reserva en ese horario.'])->withInput();
+            return back()->withErrors(['error' => 'La mesa ya está reservada en este horario.'])->withInput();
         }
-
+    
+        // Crear la reserva si no hay conflictos
         Reservation::create([
             'table_id' => $request->table_id,
             'customer_name' => $request->customer_name,
             'customer_phone' => $request->customer_phone,
             'num_people' => $request->num_people,
-            'reservation_time' => $request->reservation_time,
+            'reservation_time' => $reservationTime,
         ]);
-        
-
+    
         return redirect()->route('reservations.create')
-        ->with('success', 'Reserva realizada con éxito!');
+            ->with('success', 'Reserva realizada con éxito!');
     }
 
 

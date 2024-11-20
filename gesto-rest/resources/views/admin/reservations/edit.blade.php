@@ -43,6 +43,20 @@
 
     <div><h1 class="text-center mb-4">Editar Reserva</h1></div>
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @elseif (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <main class="container mt-4">
         <div class="form-limited">
             <form  method="POST" action="{{ route('reservations.update', $reservation->id) }}">

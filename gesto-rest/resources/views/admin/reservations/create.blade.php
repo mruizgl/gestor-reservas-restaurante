@@ -44,9 +44,19 @@
 
     <div><h1 class="text-center mb-4">Reservar Mesa</h1></div>
 
-    <div style="text-align: center; margin-bottom: 20px;">
-        <a href="{{ route('admin.dashboard') }}" >← Volver al Panel de Administración</a>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
+    @elseif (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <main class="container mt-4">
         
@@ -120,15 +130,14 @@
                             <div>
                                 <h3>{{ $reservation->customer_name }}</h3>
                                 <p>Teléfono: <span>{{ $reservation->customer_phone }}</span></p>
+                                <p>Mesa: {{ $reservation->table ? 'Mesa ' . $reservation->table->row . '-' . $reservation->table->column : 'Sin asignar' }}</p>
                                 <p>Hora: {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</p>
                                 <p>Personas: {{ $reservation->num_people }}</p>
                             </div>
                             <div>
-
                                 <a href="{{ route('reservations.edit', $reservation->id) }}" class="btn btn-warning btn-sm mb-2">
                                     Editar
                                 </a>
-                                
                                 <form method="POST" action="{{ route('reservations.destroy', $reservation->id) }}" onsubmit="return confirm('¿Está seguro que desea cancelar esta reserva?');" style="display: inline;">
                                     @csrf
                                     @method('DELETE')

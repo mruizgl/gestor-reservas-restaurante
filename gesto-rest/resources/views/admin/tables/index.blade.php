@@ -9,6 +9,19 @@
 </head>
 <body>
     <div class="grid grid-cols-4 gap-4">
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @elseif (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         @foreach ($tables as $table)
             <div class="border p-4 text-center">
                 <img src="/images/tables/{{ $table->id }}.jpg" alt="Mesa {{ $table->ubication }}" class="w-full h-32 object-cover">

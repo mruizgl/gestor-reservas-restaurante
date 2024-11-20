@@ -46,7 +46,19 @@
     <main class="container mt-4">
         <div class="d-flex justify-content-end mb-3">
             <a href="{{ route('admin.createUser') }}" class="btn btn-success">Crear Nuevo Empleado</a>
-            
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @elseif (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+            @endif
         </div>
 
         <table class="table table-striped">

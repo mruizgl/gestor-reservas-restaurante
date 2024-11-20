@@ -43,6 +43,20 @@
     <main class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="text-center">Lista de Reservas</h1>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @elseif (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+            @endif
+            
             <form method="GET" action="{{ route('reservations.list') }}" class="w-50">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" placeholder="Buscar por nombre o teléfono" value="{{ request('search') }}">
