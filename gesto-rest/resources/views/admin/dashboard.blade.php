@@ -14,6 +14,7 @@
 
 <body>
     <header>
+        
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ auth()->user()->role === 'admin' ? route('admin.dashboard') : route('reservations.create') }}">
@@ -41,8 +42,24 @@
             </div>
         </nav>
     </header>
+    <br>
+    <br>
 
-    <main>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @elseif (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <main>      
         <div class="container">
             <h1>Bienvenido al panel de administración</h1>
             <p>Seleccione la opción que desea gestionar:</p>

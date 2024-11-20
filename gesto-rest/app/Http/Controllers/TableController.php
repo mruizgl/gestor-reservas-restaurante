@@ -43,6 +43,9 @@ class TableController extends Controller
         ]);
 
         $space = Space::findOrFail($request->space_id);
+        if ($spaces->isEmpty()) {
+            return redirect()->back()->withErrors('No hay espacios disponibles para gestionar mesas.');
+        }
 
         foreach ($request->tables as $position) {
             [$row, $col] = explode('-', $position);

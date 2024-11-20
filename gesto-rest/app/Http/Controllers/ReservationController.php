@@ -44,6 +44,9 @@ class ReservationController extends Controller
     public function create(Request $request)
     {
         $spaces = Space::all();
+        if ($spaces->isEmpty()) {
+            return redirect()->back()->withErrors('No hay espacios disponibles para gestionar reservas.');
+        }
         $selectedSpace = $request->get('space', $spaces->first()->name);
         $selectedTableId = $request->get('table_id');
 
