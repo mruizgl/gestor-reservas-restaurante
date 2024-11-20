@@ -45,21 +45,42 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+ /**
+     * Eventos del modelo para sincronización con SQLite.
+     */
     protected static function booted()
     {
-        static::created(function ($reservation) {
-            event(new \App\Events\ModelChanged($reservation));
+        // Al crear un usuario, sincronizar con SQLite
+        static::created(function ($user) {
+            try {
+                DB::connection('sqlite')->table($user->getTable())->insert($user->toArray());
+            } catch (\Exception $e) {
+                Log::error('Error syncing User creation to SQLite: ' . $e->getMessage());
+            }
         });
 
-        static::updated(function ($reservation) {
-            event(new \App\Events\ModelChanged($reservation));
+        // Al actualizar un usuario, sincronizar con SQLite
+        static::updated(function ($user) {
+            try {
+                DB::connection('sqlite')
+                    ->table($user->getTable())
+                    ->where('id', $user->id)
+                    ->update($user->toArray());
+            } catch (\Exception $e) {
+                Log::error('Error syncing User update to SQLite: ' . $e->getMessage());
+            }
         });
 
-        static::deleted(function ($reservation) {
-            DB::connection('sqlite')
-                ->table($reservation->getTable())
-                ->where('id', $reservation->id)
-                ->delete();
+        // Al eliminar un usuario, sincronizar con SQLite
+        static::deleted(function ($user) {
+            try {
+                DB::connection('sqlite')
+                    ->table($user->getTable())
+                    ->where('id', $user->id)
+                    ->delete();
+            } catch (\Exception $e) {
+                Log::error('Error syncing User deletion to SQLite: ' . $e->getMessage());
+            }
         });
     }
 

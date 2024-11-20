@@ -38,12 +38,14 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\DatabaseFallback::class,
         ],
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\DatabaseFallback::class,
         ],
     ];
 
@@ -71,4 +73,9 @@ class Kernel extends HttpKernel
         
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('backup:sqlite')->hourly();
+    }
+
 }
