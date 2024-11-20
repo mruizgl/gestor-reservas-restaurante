@@ -17,7 +17,8 @@ Del contacto telefónico que hace la reserva se guarda un nombre y un teléfono 
 
 Son los usuarios con rol admin los únicos que tienen permiso para registrar nuevos usuarios.  
 
-Alumnas que realizan el trabajo: Noelia y Melissa
+
+#### __Alumnas que realizan el trabajo: Noelia y Melissa__
 
 
 
