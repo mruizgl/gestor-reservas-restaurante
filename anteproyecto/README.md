@@ -48,7 +48,7 @@ Almacena los detalles de cada reserva:
 - `num_comensales`: Número de personas en la reserva.
 - `fecha_hora`: Fecha y hora de la reserva.
 
-```php
+
 Schema::create('reservas', function (Blueprint $table) {
     $table->id();
     $table->foreignId('mesa_id')->constrained('mesas');
