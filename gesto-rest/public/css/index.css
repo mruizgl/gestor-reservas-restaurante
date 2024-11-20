@@ -1,0 +1,47 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    color: #282C59;
+}
+
+main {
+    flex: 1; /* Permite que el contenido crezca y empuje el footer hacia abajo si es necesario */
+}
+
+footer {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 10px 0;
+}
+
+.footer-content {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Ajuste del contenido en pantallas grandes */
+.container {
+    max-width: 1200px; /* Limita el ancho para que no se extienda demasiado en pantallas grandes */
+}
+
+footer {
+    width: 100%;
+    background-color: #0D263F;
+    color: #F7FAF9;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+}
+
+head {
+   
+    width: 100%;
+    background-color: #0D263F;
+    color: #F7FAF9;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+    
+}

@@ -16,10 +16,28 @@ class ReservationController extends Controller
     /**
      * Muestra todas las reservas.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $reservations = Reservation::all();
-        return view('reservations.index', compact('reservations'));
+        $search = $request->get('search');
+    $today = Carbon::today();
+
+    // Reservas del día actual
+    $todaysReservations = Reservation::whereDate('reservation_time', $today)
+        ->orderBy('reservation_time')
+        ->get();
+
+    // Si hay una búsqueda, busca en todas las reservas
+    $allReservations = [];
+    if ($search) {
+        $allReservations = Reservation::where(function ($q) use ($search) {
+            $q->where('customer_name', 'like', '%' . $search . '%')
+              ->orWhere('customer_phone', 'like', '%' . $search . '%');
+        })
+        ->orderBy('reservation_time')
+        ->get();
+    }
+
+    return view('admin.reservations.index', compact('todaysReservations', 'allReservations', 'search'));
     }
 
     /**

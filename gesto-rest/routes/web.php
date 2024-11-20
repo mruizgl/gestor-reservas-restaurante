@@ -22,7 +22,8 @@ use App\Http\Controllers\AdminController;
 // -----------------------------WELCOME----------------------------------------//
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->middleware('guest'); // O middleware('redirect.if.authenticated')
+
 
 // -----------------------------LOGIN----------------------------------------//
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -51,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::get('/index/reservations', [ReservationController::class, 'index'])->name('reservations.list');
 });
 
 // -----------------------------USUARIOS----------------------------------------//
