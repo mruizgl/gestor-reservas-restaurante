@@ -18,6 +18,10 @@ class TableController extends Controller
      */
     public function create()
     {
+        $spaces = Space::all();
+        if ($spaces->isEmpty()) {
+            return redirect()->back()->withErrors('No hay espacios disponibles para gestionar reservas.');
+        }
         $tables = Table::all()->map(function ($table) {
             $table->image = asset('images/' . $table->capacity . '.png');
             return $table;
@@ -34,6 +38,10 @@ class TableController extends Controller
      */
     public function store(Request $request)
     {
+        $spaces = Space::all();
+        if ($spaces->isEmpty()) {
+            return redirect()->back()->withErrors('No hay espacios disponibles para gestionar reservas.');
+        }
         $request->validate([
             'space_id' => 'required|exists:spaces,id',
             'tables' => 'required|array',
