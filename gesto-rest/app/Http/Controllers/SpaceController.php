@@ -10,38 +10,59 @@ use App\Models\Space;
  */
 class SpaceController extends Controller
 {
-    /**
-     * Muestra el formulario para crear un nuevo espacio.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
+    public function index()
     {
-        return view('admin.spaces.create'); 
+        $spaces = Space::all();
+        return view('admin.spaces.index', compact('spaces'));
     }
 
-    /**
-     * Almacena un nuevo espacio en la base de datos.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    // Mostrar el formulario de creación
+    public function create()
+    {
+        return view('admin.spaces.create');
+    }
+
+    // Almacenar un nuevo espacio
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'rows' => 'required|integer|min:1',
             'columns' => 'required|integer|min:1',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:1000',
         ]);
 
-        Space::create([
-            'name' => $request->name,
-            'rows' => $request->rows,
-            'columns' => $request->columns,
-            'description' => $request->description,
+        Space::create($request->all());
+
+        return redirect()->route('spaces.index')->with('success', 'Espacio creado correctamente.');
+    }
+
+    // Mostrar el formulario de edición
+    public function edit(Space $space)
+    {
+        return view('admin.spaces.edit', compact('space'));
+    }
+
+    // Actualizar un espacio existente
+    public function update(Request $request, Space $space)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'rows' => 'required|integer|min:1',
+            'columns' => 'required|integer|min:1',
+            'description' => 'nullable|string|max:1000',
         ]);
 
-        return redirect()->route('admin.dashboard')->with('success', 'Espacio creado con éxito.');
+        $space->update($request->all());
+
+        return redirect()->route('spaces.index')->with('success', 'Espacio actualizado correctamente.');
+    }
+
+    // Eliminar un espacio
+    public function destroy(Space $space)
+    {
+        $space->delete();
+
+        return redirect()->route('spaces.index')->with('success', 'Espacio eliminado correctamente.');
     }
 }

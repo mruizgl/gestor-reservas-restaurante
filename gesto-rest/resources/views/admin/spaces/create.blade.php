@@ -86,7 +86,11 @@
                 <button type="submit" class="btn-back">Crear Espacio</button>
             </form>
         </div>
+        
     </main>
+
+    <buatton onclick="window.history.back()">← Volver</a>
+
 
     <footer class="wrapper">
         <p>&copy; 2024 Gesto-rest. Todos los derechos reservados.</p>

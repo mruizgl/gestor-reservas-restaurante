@@ -45,14 +45,14 @@
     <main>
         <div class="container">
             <h1>Bienvenido al panel de administración</h1>
-            <p>Seleccione una opción para gestionar las reservas o crear nuevos usuarios.</p>
+            <p>Seleccione la opción que desea gestionar:</p>
 
             <div class="list-group">
                 <div class="list-group">
-                    <a href="{{ route('spaces.create') }}" class="list-group-item">1. Crear Espacio</a> 
-                    <a href="{{ route('tables.create') }}" class="list-group-item">2. Añadir Mesas</a>
-                    <a href="{{ route('reservations.create') }}" class="list-group-item">3. Gestionar Reservas</a>
-                    <a href="{{ route('admin.users.index') }}" class="list-group-item">4. Gestionar Empleados</a>
+                    <a href="{{ route('spaces.index') }}" class="list-group-item">1. Espacios</a> 
+                    <a href="{{ route('tables.create') }}" class="list-group-item">2. Mesas</a>
+                    <a href="{{ route('reservations.create') }}" class="list-group-item">3. Reservas</a>
+                    <a href="{{ route('admin.users.index') }}" class="list-group-item">4. Empleados</a>
                     
                     
                 </div>

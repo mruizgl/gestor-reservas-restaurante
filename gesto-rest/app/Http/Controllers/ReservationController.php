@@ -72,7 +72,7 @@ class ReservationController extends Controller
             'selectedTableId',
             'allSlots',
             'occupiedSlots',
-            'reservations' // Asegurarse de pasar esta variable
+            'reservations' 
         ));
     }
 
@@ -111,8 +111,8 @@ class ReservationController extends Controller
         ]);
         
 
-        return redirect()->route('admin.reservations.create')
-            ->with('success', 'Reserva realizada con éxito!');
+        return redirect()->route('reservations.create')
+        ->with('success', 'Reserva realizada con éxito!');
     }
 
 

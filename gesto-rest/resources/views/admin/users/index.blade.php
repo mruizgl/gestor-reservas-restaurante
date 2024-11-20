@@ -38,6 +38,11 @@
         </nav>
     </header>
     <h1 class="text-center">Gestionar Empleados</h1>
+
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="{{ route('admin.dashboard') }}" >← Volver al Panel de Administración</a>
+    </div>
+
     <main class="container mt-4">
         <div class="d-flex justify-content-end mb-3">
             <a href="{{ route('admin.createUser') }}" class="btn btn-success">Crear Nuevo Empleado</a>
@@ -79,7 +84,7 @@
         </table>
         
     </main>
-    <a onclick="window.history.back()" >Volver atrás</a>
+    
 
     <footer class="text-center mt-4">
         <p>&copy; 2024 Gesto-Rest. Todos los derechos reservados.</p>
