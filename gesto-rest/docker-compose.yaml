@@ -1,0 +1,46 @@
+version: '3'
+services:
+     app-restaurante:
+          build:
+               context: .
+               dockerfile: Dockerfile
+          image: app-restaurante-image
+          container_name: app-restaurante-container
+          restart: unless-stopped
+          tty: true
+          environment:
+               SERVICE_NAME: app
+               SERVICE_TAGS: dev
+          working_dir: /var/www
+          volumes:
+               - .:/var/www
+          networks:
+               - app-restaurante-network
+
+     app-restaurante-webserver:
+          image: nginx:stable-alpine3.20
+          container_name: app-restaurante-nginx-webserver
+          restart: unless-stopped
+          ports:
+               - "8090:80"
+          volumes:
+               - .:/var/www
+               - ./docker-composer/nginx:/etc/nginx/conf.d/
+          networks:
+               - app-restaurante-network
+
+     app-restaurante-mysqldb:
+          image: mysql:8.3.0
+          container_name: app-restaurante-mysql-container
+          environment:
+               MYSQL_ROOT_PASSWORD: 1q2w3e4r
+          volumes:
+               - app-restaurante-dbdata:/var/lib/mysql
+               - ./docker-compose/init.sql:/docker-entrypoint-initdb.d/init.sql
+          networks:
+               - app-restaurante-network
+
+volumes:
+     app-restaurante-dbdata:
+networks:
+     app-restaurante-network:
