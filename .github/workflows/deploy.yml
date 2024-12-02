@@ -23,7 +23,8 @@ jobs:
       # Navegar al subdirectorio del proyecto
       - name: Navigate to gesto-rest
         working-directory: gesto-rest
-        run: ls
+        run: |
+          ls
 
       # Configurar Docker
       - name: Set up Docker
