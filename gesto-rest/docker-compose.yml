@@ -20,7 +20,7 @@ services:
       - DB_PORT=3306
       - DB_DATABASE=restaurante7
       - DB_USERNAME=root
-      - DB_PASSWORD=
+      - DB_PASSWORD=1q2w3e4r
     depends_on:
       db:
         condition: service_healthy
@@ -31,7 +31,7 @@ services:
     environment:
       MYSQL_DATABASE: restaurante7
       MYSQL_USER: root
-      MYSQL_PASSWORD: ""
+      MYSQL_PASSWORD: 1q2w3e4r
     volumes:
       - db_data:/var/lib/mysql
     ports:
