@@ -1,0 +1,39 @@
+name: Deploy Laravel App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clonar el repositorio
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Cambiar al directorio del proyecto Laravel
+      - name: Navigate to gesto-rest
+        working-directory: gesto-rest
+        run: ls
+
+      # 3. Configurar Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      # 4. Construir y ejecutar Docker Compose
+      - name: Build and Deploy
+        working-directory: gesto-rest
+        run: |
+          docker-compose down
+          docker-compose up -d --build
+
+      # 5. Ejecutar comandos de Laravel
+      - name: Run Laravel Commands
+        working-directory: gesto-rest
+        run: |
+          docker exec gesto-rest-app php artisan migrate --force
+          docker exec gesto-rest-app php artisan db:seed --force
+          docker exec gesto-rest-app php artisan storage:link
