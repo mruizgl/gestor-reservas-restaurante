@@ -9,6 +9,7 @@ services:
     container_name: gesto-rest-app
     volumes:
       - .:/var/www
+      - /var/www/vendor
     ports:
       - "8090:9000"
     environment:
