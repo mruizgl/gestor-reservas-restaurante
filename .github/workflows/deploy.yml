@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # 2. Cambiar al directorio del proyecto Laravel
+      # 2. Navegar al subdirectorio del proyecto
       - name: Navigate to gesto-rest
         working-directory: gesto-rest
         run: ls
@@ -35,5 +35,8 @@ jobs:
         working-directory: gesto-rest
         run: |
           docker exec gesto-rest-app php artisan migrate --force
-          docker exec gesto-rest-app php artisan db:seed --force
-          docker exec gesto-rest-app php artisan storage:link
+          docker exec gesto-rest-app php artisan db:seed --class=UsersTableSeeder
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
