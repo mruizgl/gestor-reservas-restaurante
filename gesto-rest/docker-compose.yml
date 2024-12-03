@@ -1,6 +1,6 @@
 services:
   gesto-rest-app:
-    image: $DOCKERHUB_USERNAME/gesto-rest-app-image
+    image: mruizgl/gesto-rest-app-image
     container_name: gesto-rest-app-container
     restart: unless-stopped
     tty: true
@@ -12,7 +12,7 @@ services:
       - gesto-rest-network
 
   gesto-rest-webserver:
-    image: $DOCKERHUB_USERNAME/gesto-rest-nginx-webserver-image
+    image: mruizgl/gesto-rest-nginx-webserver-image
     container_name: gesto-rest-webserver-container
     restart: unless-stopped
     ports:
