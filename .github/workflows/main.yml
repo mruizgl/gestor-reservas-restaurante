@@ -1,7 +1,5 @@
-
 name: Build and Deploy Docker image
-#
-#
+
 on:
   push:
     branches:
@@ -14,6 +12,19 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
+
+    - name: Set permissions
+      run: chmod 777 ./gesto-rest/storage -R && chmod 777 ./gesto-rest/bootstrap -R
+
+    - name: Set up env file
+      run: |
+        echo "APP_NAME=gesto-rest" > ./gesto-rest/.env
+        echo "APP_ENV=production" >> ./gesto-rest/.env
+        echo "APP_KEY=${{ secrets.APP_KEY }}" >> ./gesto-rest/.env
+        echo "DB_HOST=gesto-rest-mysql-container" >> ./gesto-rest/.env
+        echo "DB_DATABASE=restaurante" >> ./gesto-rest/.env
+        echo "DB_USERNAME=root" >> ./gesto-rest/.env
+        echo "DB_PASSWORD=1q2w3e4r" >> ./gesto-rest/.env
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2

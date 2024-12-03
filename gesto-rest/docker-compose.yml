@@ -1,25 +1,40 @@
-
-version: '3.8'
-
 services:
-  app:
-    image: $DOCKERHUB_USERNAME/app-image:latest
-    container_name: app-container
+  gesto-rest-app:
+    image: $DOCKERHUB_USERNAME/gesto-rest-app-image
+    container_name: gesto-rest-app-container
     restart: unless-stopped
+    tty: true
     environment:
-      SERVICE_NAME: app
+      SERVICE_NAME: gesto-rest
       SERVICE_TAGS: dev
+    working_dir: /var/www
     networks:
-      - app-network
+      - gesto-rest-network
 
-  webserver:
-    image: $DOCKERHUB_USERNAME/nginx-image:latest
-    container_name: nginx-container
+  gesto-rest-webserver:
+    image: $DOCKERHUB_USERNAME/gesto-rest-nginx-webserver-image
+    container_name: gesto-rest-webserver-container
     restart: unless-stopped
     ports:
       - "8090:80"
     networks:
-      - app-network
+      - gesto-rest-network
 
+  gesto-rest-mysqldb:
+    image: mysql:8.0
+    container_name: gesto-rest-mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: 1q2w3e4r
+      MYSQL_DATABASE: restaurante
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 1q2w3e4r
+    volumes:
+      - gesto-rest-dbdata:/var/lib/mysql
+      - ./docker-compose/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - gesto-rest-network
+
+volumes:
+  gesto-rest-dbdata:
 networks:
-  app-network:
+  gesto-rest-network:
