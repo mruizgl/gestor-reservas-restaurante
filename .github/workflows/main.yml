@@ -63,7 +63,7 @@ jobs:
         username: ${{ secrets.HOSTING_USERNAME }}
         key: ${{ secrets.HOSTING_KEY }}
         script: |
-          cd /gesto-rest
+          cd /home/restaurante/gestor-reservas-restaurante/gesto-rest
           docker-compose down;
           docker-compose pull;
           docker-compose up -d;
