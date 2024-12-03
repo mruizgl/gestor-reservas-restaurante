@@ -30,7 +30,7 @@ jobs:
         context: .
         file: AppDockerfile
         push: true
-        tags: ${{ vars.DOCKERHUB_USERNAME }}/app-image:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/app-image:latest
 
     - name: Build and push Nginx
       uses: docker/build-push-action@v6
@@ -38,7 +38,7 @@ jobs:
         context: .
         file: NginxDockerfile
         push: true
-        tags: ${{ vars.DOCKERHUB_USERNAME }}/nginx-image:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx-image:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,8 +48,8 @@ jobs:
     - name: Deploy to VPS
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ vars.HOSTING_PC }}
-        username: ${{ vars.HOSTING_USERNAME }}
+        host: ${{ secrets.HOSTING_PC }}
+        username: ${{ secrets.HOSTING_USERNAME }}
         key: ${{ secrets.HOSTING_KEY }}
         script: |
           docker-compose down;
