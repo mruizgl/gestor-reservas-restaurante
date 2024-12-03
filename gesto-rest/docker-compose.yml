@@ -21,13 +21,10 @@ services:
       - gesto-rest-network
 
   gesto-rest-mysqldb:
-    image: mysql:8.0
+    image: mysql:8.3.0
     container_name: gesto-rest-mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: 1q2w3e4r
-      MYSQL_DATABASE: restaurante
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 1q2w3e4r
     volumes:
       - gesto-rest-dbdata:/var/lib/mysql
       - ./docker-compose/init.sql:/docker-entrypoint-initdb.d/init.sql
