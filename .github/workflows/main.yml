@@ -18,6 +18,7 @@ jobs:
 
     - name: Set up env file
       run: |
+        echo "APP_URL=http://appsiespuerto.myvnc.com:8090" > ./gesto-rest/.env
         echo "APP_NAME=gesto-rest" > ./gesto-rest/.env
         echo "APP_ENV=production" >> ./gesto-rest/.env
         echo "APP_KEY=${{ secrets.APP_KEY }}" >> ./gesto-rest/.env
