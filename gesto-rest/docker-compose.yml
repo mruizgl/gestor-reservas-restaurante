@@ -1,11 +1,11 @@
 services:
-  gesto-rest-app:
+  app:
     image: mruizgl/gesto-rest-app-image
     container_name: gesto-rest-app-container
     restart: unless-stopped
     tty: true
     environment:
-      SERVICE_NAME: app
+      SERVICE_NAME: gesto-rest
       SERVICE_TAGS: dev
     working_dir: /var/www
     networks:
