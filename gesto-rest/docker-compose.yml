@@ -35,4 +35,3 @@ volumes:
   gesto-rest-dbdata:
 networks:
   gesto-rest-network:
-  #
